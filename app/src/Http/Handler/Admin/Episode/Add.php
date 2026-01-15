@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Controller\Admin\Episode;
+namespace App\Http\Handler\Admin\Episode;
 
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use Juzdy\Model\CollectionInterface;
 use App\Model\BlogPost;
 use App\Model\Episode;
 
 class Add extends AdminController
 {
-    public function handle(): void
+    protected function execute(): void
     {
         $this->render(
             'admin/episode/form',

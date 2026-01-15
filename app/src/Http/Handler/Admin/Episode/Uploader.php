@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller\Admin\Episode;
+namespace App\Http\Handler\Admin\Episode;
 
 use Juzdy\Request;
 

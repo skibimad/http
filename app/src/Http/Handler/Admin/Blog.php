@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Http\Handler\Admin;
 
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use Juzdy\Model\CollectionInterface;
 
 class Blog extends AdminController
 {
-    public function handle(): void
+    protected function execute(): void
     {
         $collection = $this->getPosts();
         

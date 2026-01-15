@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Http\Handler\Admin;
 
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use App\Model\BlogPost;
 
 class Index extends AdminController
 {
-    public function handle(): void
+    protected function execute(): void
     {
         $blogs = (new BlogPost())->getCollection();
 

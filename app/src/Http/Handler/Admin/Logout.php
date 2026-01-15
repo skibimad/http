@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Http\Handler\Admin;
 
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use Juzdy\Helper\Auth;
 
 class Logout extends AdminController
@@ -12,7 +12,7 @@ class Logout extends AdminController
      * 
      * @return void
      */
-    public function handle(): void
+    protected function execute(): void
     {
         Auth::logout();
         

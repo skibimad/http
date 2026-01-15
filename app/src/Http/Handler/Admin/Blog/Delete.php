@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Controller\Admin\Blog;
+namespace App\Http\Handler\Admin\Blog;
 
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use Juzdy\Model\CollectionInterface;
 use App\Model\BlogPost;
 
 class Delete extends AdminController
 {
-    public function handle(): void
+    protected function execute(): void
     {
         //try {
             $this->deletePost();

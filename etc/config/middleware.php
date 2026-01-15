@@ -28,6 +28,11 @@ return [
              *  \Bar\Foo\RequestLoggingMiddleware::class,
              * ],
              */
+            
+            // Apply authentication middleware to all admin handlers
+            \App\Http\Handler\AdminAuthenticableInterface::class => [
+                \App\Middleware\AuthMiddleware::class,
+            ],
         ],
     ],
 ];

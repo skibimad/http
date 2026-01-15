@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Controller\Admin\Landing;
+namespace App\Http\Handler\Admin\Landing;
 
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use Juzdy\Config;
 use App\Model\LandingPageContent;
 
 class Update extends AdminController
 {
-    public function handle(): void
+    protected function execute(): void
     {
         if ($this->getRequest()->isPost()) {
             $this->updateContent();

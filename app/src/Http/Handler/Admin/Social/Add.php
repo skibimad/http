@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller\Admin\Social;
+namespace App\Http\Handler\Admin\Social;
 
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use App\Model\SocialLink;
 
 class Add extends AdminController
 {
-    public function handle(): void
+    protected function execute(): void
     {
         $this->render(
             'admin/social/form',

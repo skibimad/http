@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Controller\Admin\Hero;
+namespace App\Http\Handler\Admin\Hero;
 
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use Juzdy\Config;
 use App\Model\Hero;
 
 class Put extends AdminController
 {
-    public function handle(): void
+    protected function execute(): void
     {
         if ($this->getRequest()->isPost()) {
             $this->createHero();
