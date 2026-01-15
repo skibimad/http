@@ -23,7 +23,7 @@ class Episodes extends AdminController
         $collection->setPageSize($pageSize);
         $collection->setPage($page);
 
-        $this->render(
+        $this->renderView(
             'admin/episodes',
             [
                 'episodes' => $collection,

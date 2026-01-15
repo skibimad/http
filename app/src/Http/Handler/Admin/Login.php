@@ -16,7 +16,7 @@ class Login extends AdminController
     {
         // If user is already logged in, redirect to dashboard
         if (Auth::isLoggedIn()) {
-            $this->redirect('/admin/index');
+            $this->redirectTo('/admin/index');
             return;
         }
 
@@ -26,7 +26,7 @@ class Login extends AdminController
         }
 
         // Show login form
-        $this->render(
+        $this->renderView(
             'admin/login',
             [],
             true
@@ -54,7 +54,7 @@ class Login extends AdminController
             //$this->request()->session('intended_url', null);
             
             //$this->redirectReferer();
-            $this->redirect('/admin/index');
+            $this->redirectTo('/admin/index');
             return;
         } catch (\Throwable $e) {
             die($e->getMessage());
@@ -62,7 +62,7 @@ class Login extends AdminController
         }
 
         // On failure, redirect back to login page
-        $this->redirect('/admin/login');
+        $this->redirectTo('/admin/login');
     }
 
     /**

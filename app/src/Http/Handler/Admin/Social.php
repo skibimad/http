@@ -23,7 +23,7 @@ class Social extends AdminController
         $collection->setPageSize($pageSize);
         $collection->setPage($page);
 
-        $this->render(
+        $this->renderView(
             'admin/social',
             [
                 'socialLinks' => $collection,

@@ -14,7 +14,7 @@ class Delete extends AdminController
             $this->deletePost();
 
         //} catch (\Throwable) {
-            $this->redirect('/admin/blog');
+            $this->redirectTo('/admin/blog');
         //}
 
 

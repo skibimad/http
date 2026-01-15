@@ -11,11 +11,11 @@ class Put extends AdminController
     {
         if ($this->getRequest()->isPost()) {
             $this->createSocialLink();
-            $this->redirect('/admin/social');
+            $this->redirectTo('/admin/social');
         }
 
         // Redirect if accessed via GET
-        $this->redirect('/admin/social/add');
+        $this->redirectTo('/admin/social/add');
     }
 
     protected function createSocialLink(): void

@@ -11,10 +11,10 @@ class Update extends AdminController
     {
         if ($this->getRequest()->isPost()) {
             $this->updateSocialLink();
-            $this->redirect('/admin/social');
+            $this->redirectTo('/admin/social');
         }
 
-        $this->render(
+        $this->renderView(
             'admin/social/form',
             [
                 'socialLink' => $this->findSocialLink()

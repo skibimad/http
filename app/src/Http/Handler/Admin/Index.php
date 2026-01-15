@@ -11,7 +11,7 @@ class Index extends AdminController
     {
         $blogs = (new BlogPost())->getCollection();
 
-        $this->render(
+        $this->renderView(
             'admin/dashboard',
             [
                 'blogCount' => $blogs->count(),

@@ -12,11 +12,11 @@ class Update extends AdminController
     {
         if ($this->getRequest()->isPost()) {
             $this->updateContent();
-            $this->redirect('/admin/landing');
+            $this->redirectTo('/admin/landing');
         }
 
         // Redirect to landing page if accessed via GET
-        $this->redirect('/admin/landing');
+        $this->redirectTo('/admin/landing');
     }
 
     protected function updateContent(): void

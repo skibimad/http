@@ -16,6 +16,6 @@ class Delete extends AdminController
             $socialLink->delete((int)$id);
         }
         
-        $this->redirect('/admin/social');
+        $this->redirectTo('/admin/social');
     }
 }

@@ -17,6 +17,6 @@ class Logout extends AdminController
         Auth::logout();
         
         $this->getRequest()->addInfo('You have been successfully logged out.');
-        $this->redirect('/?q=admin/login');
+        $this->redirectTo('/?q=admin/login');
     }
 }

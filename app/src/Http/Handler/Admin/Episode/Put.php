@@ -17,7 +17,7 @@ class Put extends AdminController
             $this->putEpisode();
 
         //} catch (\Throwable) {
-            $this->redirect('/admin/episodes');
+            $this->redirectTo('/admin/episodes');
         //}
         
 

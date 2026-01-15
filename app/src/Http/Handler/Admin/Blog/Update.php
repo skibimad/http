@@ -13,10 +13,10 @@ class Update extends AdminController
         //try {
         if ($this->getRequest()->isPost()) {
             $this->updatePost();
-            $this->redirect('/admin/blog');
+            $this->redirectTo('/admin/blog');
         }
 
-        $this->render(
+        $this->renderView(
             'admin/blog/post',
             [
                 'post' => $this->findPost()

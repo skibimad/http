@@ -13,10 +13,10 @@ class Update extends AdminController
         //try {
         if ($this->getRequest()->isPost()) {
             $this->updateEpisode();
-            $this->redirect('/admin/episodes');
+            $this->redirectTo('/admin/episodes');
         }
 
-        $this->render(
+        $this->renderView(
             'admin/episode/form',
             [
                 'episode' => $this->findEpisode()

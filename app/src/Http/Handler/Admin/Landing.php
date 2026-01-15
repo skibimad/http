@@ -12,7 +12,7 @@ class Landing extends AdminController
         $sections = LandingPageContent::getAllSections();
         $sectionsConfig = LandingPageContent::getSectionsConfig();
 
-        $this->render(
+        $this->renderView(
             'admin/landing',
             [
                 'sections' => $sections,

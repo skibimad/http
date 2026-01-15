@@ -59,14 +59,14 @@ abstract class AdminController extends Handler implements AuthenticatableInterfa
     }
 
     /**
-     * Render a view template
+     * Render admin view template
      *
      * @param string $template
      * @param array $params
-     * @param bool $withoutLayout
+     * @param bool $withoutLayout Ignored for now
      * @return void
      */
-    protected function render(string $template, array $params = [], bool $withoutLayout = false): void
+    protected function renderView(string $template, array $params = [], bool $withoutLayout = false): void
     {
         $view = $this->getView($template, $params);
         $content = $view->render();
@@ -74,15 +74,14 @@ abstract class AdminController extends Handler implements AuthenticatableInterfa
     }
 
     /**
-     * Redirect to a URL
+     * Redirect and exit
      *
-     * @param string $url
+     * @param string $route
      * @return never
      */
-    protected function redirect(string $url): never
+    protected function redirectTo(string $route): never
     {
-        $response = parent::redirect($url);
-        $response->send();
+        parent::redirect($route)->send();
         exit;
     }
 

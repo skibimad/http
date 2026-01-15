@@ -14,7 +14,7 @@ class Put extends AdminController
             $this->createHero();
         }
 
-        $this->redirect('/admin/heroes');
+        $this->redirectTo('/admin/heroes');
     }
 
     protected function createHero()

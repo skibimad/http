@@ -10,7 +10,7 @@ class Add extends AdminController
 {
     protected function handleRequest(): void
     {
-        $this->render(
+        $this->renderView(
             'admin/blog/post',
             [
                 'post' => $this->getPost()

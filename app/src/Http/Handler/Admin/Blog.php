@@ -22,7 +22,7 @@ class Blog extends AdminController
         $collection->setPageSize($pageSize);
         $collection->setPage($page);
 
-        $this->render(
+        $this->renderView(
             'admin/blog',
             [
                 'posts' => $collection,

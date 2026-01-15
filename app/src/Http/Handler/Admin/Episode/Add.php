@@ -11,7 +11,7 @@ class Add extends AdminController
 {
     protected function handleRequest(): void
     {
-        $this->render(
+        $this->renderView(
             'admin/episode/form',
             [
                 'episode' => $this->getEpisode()

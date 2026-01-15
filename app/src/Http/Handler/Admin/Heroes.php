@@ -23,7 +23,7 @@ class Heroes extends AdminController
         $collection->setPageSize($pageSize);
         $collection->setPage($page);
 
-        $this->render(
+        $this->renderView(
             'admin/heroes',
             [
                 'heroes' => $collection,
