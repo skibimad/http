@@ -1,11 +1,9 @@
 <?php
 namespace App\Http\Handler;
 
-use Juzdy\Contract\ViewInterface;
 use Juzdy\Http\Handler;
 use Juzdy\Http\RequestInterface;
 use Juzdy\Http\ResponseInterface;
-use App\View\Admin\View;
 
 /**
  * Base class for Admin handlers
@@ -58,14 +56,5 @@ abstract class AdminController extends Handler implements AdminAuthenticableInte
     {
         // Middleware can be added here if needed for specific admin controllers
         // Example: $this->addMiddlewareByClass(\App\Middleware\AdminLogMiddleware::class);
-    }
-
-    /**
-     * Get admin-specific view
-     */
-    protected function getView(string $template, array $params = []): ViewInterface
-    {
-        $view = new View($this->request(), $template, $params);
-        return $view;
     }
 }

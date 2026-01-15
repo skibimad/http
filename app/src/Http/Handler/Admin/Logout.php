@@ -3,7 +3,7 @@
 namespace App\Http\Handler\Admin;
 
 use App\Http\Handler\AdminController;
-use Juzdy\Helper\Auth;
+use App\Helper\Auth;
 
 class Logout extends AdminController
 {
@@ -16,7 +16,6 @@ class Logout extends AdminController
     {
         Auth::logout();
         
-        $this->getRequest()->addInfo('You have been successfully logged out.');
-        $this->redirect('/?q=admin/login');
+        $this->redirect('/admin/login');
     }
 }

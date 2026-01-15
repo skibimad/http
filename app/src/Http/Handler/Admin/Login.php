@@ -3,7 +3,7 @@
 namespace App\Http\Handler\Admin;
 
 use App\Http\Handler\AdminController;
-use Juzdy\Helper\Auth;
+use App\Helper\Auth;
 
 class Login extends AdminController
 {
