@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Handler\Admin\Hero;
 
-use Juzdy\Request;
+use Juzdy\Http\Request;
 
 class Uploader
 {

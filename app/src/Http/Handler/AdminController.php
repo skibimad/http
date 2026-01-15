@@ -39,6 +39,9 @@ abstract class AdminController extends Handler implements AuthenticatableInterfa
     /**
      * Get the request object
      *
+     * This method always returns a valid RequestInterface or throws an exception.
+     * It should only be called from handleRequest() or methods called after handleRequest().
+     *
      * @return RequestInterface
      * @throws \RuntimeException if request is not initialized
      */
@@ -52,6 +55,9 @@ abstract class AdminController extends Handler implements AuthenticatableInterfa
 
     /**
      * Get a request parameter
+     *
+     * This is a convenience method that gracefully handles the case where
+     * the request is not yet initialized by returning the default value.
      *
      * @param string $key
      * @param mixed $default
