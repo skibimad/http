@@ -40,9 +40,13 @@ abstract class AdminController extends Handler implements AuthenticatableInterfa
      * Get the request object
      *
      * @return RequestInterface
+     * @throws \RuntimeException if request is not initialized
      */
     protected function request(): RequestInterface
     {
+        if ($this->requestObj === null) {
+            throw new \RuntimeException('Request object not initialized. This should not happen in handleRequest().');
+        }
         return $this->requestObj;
     }
 
@@ -55,6 +59,9 @@ abstract class AdminController extends Handler implements AuthenticatableInterfa
      */
     protected function getRequest(string $key, mixed $default = null): mixed
     {
+        if ($this->requestObj === null) {
+            return $default;
+        }
         return $this->requestObj->request($key) ?? $default;
     }
 

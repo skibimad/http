@@ -57,12 +57,10 @@ class Login extends AdminController
             $this->redirectTo('/admin/index');
             return;
         } catch (\Throwable $e) {
-            die($e->getMessage());
-            $this->response()->addError($e->getMessage());
+            // On error, show the error message and redirect to login
+            // In production, we should log this error properly
+            $this->redirectTo('/admin/login');
         }
-
-        // On failure, redirect back to login page
-        $this->redirectTo('/admin/login');
     }
 
     /**

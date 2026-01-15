@@ -2,7 +2,7 @@
 
 namespace App\Http\Handler\Admin\Episode;
 
-use App\Controller\Admin\Episode\Uploader;
+use App\Http\Handler\Admin\Episode\Uploader;
 use App\Http\Handler\AdminController;
 use Juzdy\Config;
 use App\Model\Episode;
