@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller\Admin\Hero;
+namespace App\Http\Handler\Admin\Hero;
 
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use App\Model\Hero;
 
 class Delete extends AdminController
 {
-    public function handle(): void
+    protected function handleRequest(): void
     {
         if ($this->getRequest()->isGet()) {
             $this->deleteHero();

@@ -2,8 +2,11 @@
 namespace App\Middleware;
 
 use Juzdy\Http\Middleware\MiddlewareInterface;
-use Juzdy\Http\Middleware\RequestHandlerInterface;
-use Juzdy\Request;
+use Juzdy\Http\HandlerInterface;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
+use Juzdy\Http\Response;
+use Juzdy\Config;
 
 /**
  * Authentication Middleware
@@ -24,19 +27,18 @@ class AuthMiddleware implements MiddlewareInterface
     /**
      * Process the request.
      *
-     * @param Request $request
-     * @param RequestHandlerInterface $handler
-     * @return void
+     * @param RequestInterface $request
+     * @param HandlerInterface $handler
+     * @return ResponseInterface
      */
-    public function process(Request $request, RequestHandlerInterface $handler): void
+    public function process(RequestInterface $request, HandlerInterface $handler): ResponseInterface
     {
         // Get current route
         $route = $request->query('q') ?? '';
         
         // Skip authentication for excluded routes
         if ($this->isExcludedRoute($route)) {
-            $handler->handle($request);
-            return;
+            return $handler->handle($request);
         }
         
         // Check if user is authenticated
@@ -44,15 +46,18 @@ class AuthMiddleware implements MiddlewareInterface
 
         if ($adminUserId === null) {
             // Store the intended URL for redirect after login
-            $request->session('intended_url', /*$request->server(...)*/$_SERVER['REQUEST_URI'] ?? '/admin/index');
+            $requestUri = $request->server('REQUEST_URI') ?? '/?q=admin/index';
+            $request->session('intended_url', $requestUri);
             
-            // Redirect to admin login page (using query string format for compatibility)
-            header('Location: /admin/login');
-            exit;
+            // Redirect to admin login page
+            $response = new Response();
+            return $response
+                ->status(302)
+                ->header('Location', '/?q=admin/login');
         }
 
         // User is authenticated, continue to next middleware or handler
-        $handler->handle($request);
+        return $handler->handle($request);
     }
 
     /**

@@ -20,14 +20,11 @@ return [
             /**
              * Group middlewares based on handler interfaces they implement.
              *  
-             * Example: 
-             * \Acme\Foo\AuthintecableInterface::class => [
-             *  \Bar\Foo\BasicAuthMiddleware::class,
-             * ],
-             * \Acme\Foo\LoggableInterface::class => [
-             *  \Bar\Foo\RequestLoggingMiddleware::class,
-             * ],
+             * Handlers implementing AuthenticatableInterface will require authentication
              */
+            \App\Http\Handler\AuthenticatableInterface::class => [
+                \App\Middleware\AuthMiddleware::class,
+            ],
         ],
     ],
 ];

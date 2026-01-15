@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller\Admin\Episode;
+namespace App\Http\Handler\Admin\Episode;
 
 use App\Controller\Admin\Episode\Uploader;
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use Juzdy\Config;
 use App\Model\Episode;
 
@@ -11,7 +11,7 @@ class Put extends AdminController
 {
     //const UPLOAD_DIR = 'public/media/uploads/episode/';
 
-    public function handle(): void
+    protected function handleRequest(): void
     {
         //try {
             $this->putEpisode();

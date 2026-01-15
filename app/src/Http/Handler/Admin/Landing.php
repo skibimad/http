@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Http\Handler\Admin;
 
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use App\Model\LandingPageContent;
 
 class Landing extends AdminController
 {
-    public function handle(): void
+    protected function handleRequest(): void
     {
         $sections = LandingPageContent::getAllSections();
         $sectionsConfig = LandingPageContent::getSectionsConfig();

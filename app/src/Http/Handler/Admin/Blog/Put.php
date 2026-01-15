@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Admin\Blog;
+namespace App\Http\Handler\Admin\Blog;
 
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use Juzdy\Config;
 use Juzdy\Model\CollectionInterface;
 use App\Model\BlogPost;
@@ -11,7 +11,7 @@ class Put extends AdminController
 {
     //const UPLOAD_DIR = 'public/media/uploads/blog/';
 
-    public function handle(): void
+    protected function handleRequest(): void
     {
         //try {
             $this->putPost();

@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller\Admin\Blog;
+namespace App\Http\Handler\Admin\Blog;
 
 use Juzdy\Request;
 
