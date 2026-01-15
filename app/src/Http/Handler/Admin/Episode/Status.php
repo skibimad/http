@@ -11,7 +11,7 @@ class Status extends AdminController
     protected function handleRequest(): void
     {
         //try {
-        if ($this->getRequest()->isGet()) {
+        if ($this->request()->isGet()) {
             $this->updateEpisode();
         }
         $this->redirectReferer();

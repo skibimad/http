@@ -10,7 +10,7 @@ class Update extends AdminController
 {
     protected function handleRequest(): void
     {
-        if ($this->getRequest()->isPost()) {
+        if ($this->request()->isPost()) {
             $this->updateHero();
             $this->redirectTo('/admin/heroes');
         }

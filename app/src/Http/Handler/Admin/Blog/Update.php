@@ -11,7 +11,7 @@ class Update extends AdminController
     protected function handleRequest(): void
     {
         //try {
-        if ($this->getRequest()->isPost()) {
+        if ($this->request()->isPost()) {
             $this->updatePost();
             $this->redirectTo('/admin/blog');
         }

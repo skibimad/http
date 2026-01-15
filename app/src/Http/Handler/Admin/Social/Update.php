@@ -9,7 +9,7 @@ class Update extends AdminController
 {
     protected function handleRequest(): void
     {
-        if ($this->getRequest()->isPost()) {
+        if ($this->request()->isPost()) {
             $this->updateSocialLink();
             $this->redirectTo('/admin/social');
         }

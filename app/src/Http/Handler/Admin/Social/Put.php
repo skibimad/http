@@ -9,7 +9,7 @@ class Put extends AdminController
 {
     protected function handleRequest(): void
     {
-        if ($this->getRequest()->isPost()) {
+        if ($this->request()->isPost()) {
             $this->createSocialLink();
             $this->redirectTo('/admin/social');
         }

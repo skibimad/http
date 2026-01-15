@@ -9,7 +9,7 @@ class Delete extends AdminController
 {
     protected function handleRequest(): void
     {
-        if ($this->getRequest()->isGet()) {
+        if ($this->request()->isGet()) {
             $this->deleteHero();
         }
         $this->redirectReferer();
