@@ -1,0 +1,41 @@
+
+<div class="admin-header">
+    <h1 class="admin-title">Manage Blog Posts</h1>
+    <a href="/admin/blog/add" class="btn btn-add">Create</a>
+</div>
+
+<!-- Pagination Controls -->
+<?php include __DIR__ . '/components/pagination.phtml'; ?>
+
+<!-- Responsive Grid View -->
+<div class="admin-cards-grid">
+    <?php foreach ($this('posts') as $post): ?>
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <h3 class="admin-card-title"><?= htmlspecialchars($post['title']) ?></h3>
+            <span class="admin-card-date"><?= $post['published_at'] ? date('M d, Y', strtotime($post['published_at'])) : 'N/A' ?></span>
+        </div>
+        
+        <div class="admin-card-excerpt">
+            <img height="100rem" src="/<?= htmlspecialchars(trim($post['image'], '/')) ?>" alt="<?= htmlspecialchars($post['title']) ?>" class="card-image">
+            <p><?= htmlspecialchars(substr(strip_tags($post['content']), 0, 150) . '...') ?></p>
+        </div>
+        
+        <div class="card-actions">
+            <a x-tooltip="Open on Page" target="_blank" href="/blog/#<?=$post->getAnchor()?>" class="btn-small btn-edit x-tooltip"><i class="fas fa-external-link-alt"></i></a>
+            <a x-tooltip="Edit" href="/admin/blog/update?id=<?= $post->getId() ?>" class="btn-small btn-edit x-tooltip"><i class="fas fa-edit"></i></a>
+            <a x-tooltip="<?= $post->isPublished() ? 'Unpublish' : 'Publish' ?>"
+                href="/admin/blog/publish?id=<?= $post->getId() ?>" class="btn-small <?= $post->isPublished() ? 'btn-warning x-tooltip' : 'btn-edit x-tooltip' ?>">
+                <i class="fas fa-<?= $post->isPublished() ? 'eye-slash' : 'eye' ?>"></i>
+            </a>
+            <a x-tooltip="Delete" href="/admin/blog/delete?id=<?= $post->getId() ?>" class="btn-small btn-danger x-tooltip"
+               onclick="return confirm('Are you sure you want to delete this post?')">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+        </div>
+    </div>
+    <?php endforeach; ?>
+</div>
+
+<!-- Pagination Controls (bottom) -->
+<?php include __DIR__ . '/components/pagination.phtml'; ?>

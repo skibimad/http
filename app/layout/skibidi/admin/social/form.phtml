@@ -1,0 +1,48 @@
+<?php
+$socialLink = $this('socialLink');
+?>
+<div class="admin-header">
+    <h1 class="admin-title">Social Link</h1>
+    <a class="btn btn-primary" onclick="history.back()">Back</a>
+</div>
+
+<div class="form-container">
+    <div class="form-card">
+
+        <form method="post" action="/admin/social/<?= $socialLink['id'] ? 'update' : 'put' ?>" class="social-form">
+            <input type="hidden" name="social[id]" value="<?= $socialLink['id'] ?>">
+            
+            <div class="form-group">
+                <label for="social-platform">Platform Name</label>
+                <input value="<?= htmlspecialchars($socialLink['platform'] ?? '') ?>" type="text" id="social-platform" name="social[platform]" placeholder="e.g., Twitter, Instagram, TikTok" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="social-url">URL</label>
+                <input value="<?= htmlspecialchars($socialLink['url'] ?? '') ?>" type="url" id="social-url" name="social[url]" placeholder="https://..." required>
+            </div>
+
+            <div class="form-group">
+                <label for="social-icon">Icon Class (Font Awesome)</label>
+                <input value="<?= htmlspecialchars($socialLink['icon_class'] ?? '') ?>" type="text" id="social-icon" name="social[icon_class]" placeholder="e.g., fab fa-twitter, fab fa-instagram">
+                <small>Use Font Awesome icon classes. Examples: fab fa-twitter, fab fa-instagram, fab fa-tiktok, fab fa-discord</small>
+            </div>
+
+            <div class="form-group">
+                <label for="social-order">Display Order</label>
+                <input value="<?= htmlspecialchars($socialLink['display_order'] ?? '0') ?>" type="number" id="social-order" name="social[display_order]" placeholder="0" min="0">
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="social[enabled]" value="1" <?= ($socialLink['enabled'] ?? 1) ? 'checked' : '' ?>>
+                    Enabled
+                </label>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Save
+            </button>
+        </form>
+    </div>
+</div>

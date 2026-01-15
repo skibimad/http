@@ -1,0 +1,206 @@
+<?php
+$currentPage = $this('currentPage') ?? 1;
+$totalPages = $this('totalPages') ?? 1;
+$pageSize = $this('pageSize') ?? 6;
+$totalCount = $this('totalCount') ?? 0;
+
+// Get current path without query string
+$currentPath = strtok($_SERVER['REQUEST_URI'], '?');
+
+// Build base URL with existing params (excluding page and pageSize)
+$queryParams = $_GET;
+unset($queryParams['page']);
+unset($queryParams['pageSize']);
+$baseQuery = http_build_query($queryParams);
+$baseUrl = $currentPath . ($baseQuery ? '?' . $baseQuery . '&' : '?');
+
+$pageSizeOptions = [3, 6, 9, 12, 15, 18];
+?>
+
+<div class="pagination-wrapper">
+    <div class="pagination-info">
+        <span>Showing <?= min(($currentPage - 1) * $pageSize + 1, $totalCount) ?> - <?= min($currentPage * $pageSize, $totalCount) ?> of <?= $totalCount ?> items</span>
+    </div>
+    
+    <div class="pagination-controls">
+        <!-- Page Size Selector -->
+        <div class="page-size-selector">
+            <label for="pageSize">Per page:</label>
+            <select id="pageSize" onchange="changePageSize(this.value)">
+                <?php foreach ($pageSizeOptions as $size): ?>
+                    <option value="<?= $size ?>" <?= $pageSize == $size ? 'selected' : '' ?>><?= $size ?></option>
+                <?php endforeach; ?>
+                <?php if (!in_array($pageSize, $pageSizeOptions)): ?>
+                    <option value="<?= $pageSize ?>" selected><?= $pageSize ?> (custom)</option>
+                <?php endif; ?>
+                <option value="custom">Custom...</option>
+            </select>
+        </div>
+        
+        <!-- Page Navigation -->
+        <?php if ($totalPages > 1): ?>
+        <div class="pagination-nav">
+            <?php if ($currentPage > 1): ?>
+                <a href="<?= $baseUrl ?>page=1&pageSize=<?= $pageSize ?>" class="pagination-btn" title="First Page">
+                    <i class="fas fa-angle-double-left"></i>
+                </a>
+                <a href="<?= $baseUrl ?>page=<?= $currentPage - 1 ?>&pageSize=<?= $pageSize ?>" class="pagination-btn" title="Previous Page">
+                    <i class="fas fa-angle-left"></i>
+                </a>
+            <?php else: ?>
+                <span class="pagination-btn disabled"><i class="fas fa-angle-double-left"></i></span>
+                <span class="pagination-btn disabled"><i class="fas fa-angle-left"></i></span>
+            <?php endif; ?>
+            
+            <span class="pagination-current">
+                Page <input type="number" value="<?= $currentPage ?>" min="1" max="<?= $totalPages ?>" 
+                       onchange="goToPage(this.value)" class="page-input"> of <?= $totalPages ?>
+            </span>
+            
+            <?php if ($currentPage < $totalPages): ?>
+                <a href="<?= $baseUrl ?>page=<?= $currentPage + 1 ?>&pageSize=<?= $pageSize ?>" class="pagination-btn" title="Next Page">
+                    <i class="fas fa-angle-right"></i>
+                </a>
+                <a href="<?= $baseUrl ?>page=<?= $totalPages ?>&pageSize=<?= $pageSize ?>" class="pagination-btn" title="Last Page">
+                    <i class="fas fa-angle-double-right"></i>
+                </a>
+            <?php else: ?>
+                <span class="pagination-btn disabled"><i class="fas fa-angle-right"></i></span>
+                <span class="pagination-btn disabled"><i class="fas fa-angle-double-right"></i></span>
+            <?php endif; ?>
+        </div>
+        <?php endif; ?>
+    </div>
+</div>
+
+<script>
+function changePageSize(size) {
+    if (size === 'custom') {
+        const customSize = prompt('Enter custom page size (1-100):', '10');
+        if (customSize && !isNaN(customSize) && customSize >= 1 && customSize <= 100) {
+            size = parseInt(customSize);
+        } else {
+            document.getElementById('pageSize').value = <?= $pageSize ?>;
+            return;
+        }
+    }
+    window.location.href = '<?= $baseUrl ?>page=1&pageSize=' + size;
+}
+
+function goToPage(page) {
+    page = parseInt(page);
+    if (page >= 1 && page <= <?= $totalPages ?>) {
+        window.location.href = '<?= $baseUrl ?>page=' + page + '&pageSize=<?= $pageSize ?>';
+    }
+}
+</script>
+
+<style>
+.pagination-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    margin: 15px 0;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.pagination-info {
+    color: var(--text-muted, #888);
+    font-size: 0.9rem;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.page-size-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-size-selector label {
+    color: var(--text-muted, #888);
+    font-size: 0.9rem;
+}
+
+.page-size-selector select {
+    padding: 6px 12px;
+    border: 1px solid var(--border-color, #333);
+    border-radius: 4px;
+    background: var(--bg-secondary, #1a1a1a);
+    color: var(--text-primary, #fff);
+    cursor: pointer;
+}
+
+.pagination-nav {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color, #333);
+    border-radius: 4px;
+    background: var(--bg-secondary, #1a1a1a);
+    color: var(--text-primary, #fff);
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.pagination-btn:hover:not(.disabled) {
+    background: var(--accent-color, #00f3ff);
+    border-color: var(--accent-color, #00f3ff);
+    color: var(--bg-primary, #0a0a0a);
+}
+
+.pagination-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-current {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 10px;
+    color: var(--text-primary, #fff);
+}
+
+.page-input {
+    width: 50px;
+    padding: 4px 8px;
+    border: 1px solid var(--border-color, #333);
+    border-radius: 4px;
+    background: var(--bg-secondary, #1a1a1a);
+    color: var(--text-primary, #fff);
+    text-align: center;
+}
+
+.page-input::-webkit-outer-spin-button,
+.page-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .pagination-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .pagination-controls {
+        justify-content: center;
+    }
+}
+</style>
