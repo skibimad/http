@@ -1,0 +1,41 @@
+<?php
+
+use App\Helper\Resource;
+?>
+<section id="channel" class="channel-section">
+    <div class="container">
+        <div class="channel-content">
+            <div class="channel-info">
+                <h2><?= htmlspecialchars($this('getLandingContent')('channel', 'title')) ?></h2>
+                <p>
+                    <?= $this('getLandingContent')('channel', 'subtitle') ?>
+                </p>
+                <div class="channel-stats">
+                    <div class="stat">
+                        <span class="stat-icon">🎬</span>
+                        <span>New Episodes Regularly</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">🌟</span>
+                        <span>Exclusive Content</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">🎮</span>
+                        <span>Community Events</span>
+                    </div>
+                </div>
+                <a href="/youclick?y=<?php echo \App\Helper\YouChannel::getSubscribeButtonUrl(); ?>" target="_blank" class="btn btn-channel g-tag" data-gtag="subscribe_click" data-gtag-section="channel">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="youtube-icon">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg>
+                    <span>Subscribe Now</span>
+                </a>
+            </div>
+            <div class="channel-visual">
+                <video autoplay muted loop playsinline preload="none" class="channel-video">
+                    <source src="<?php echo Resource::getRandomVideo() ?>" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+</section>

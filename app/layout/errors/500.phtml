@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 - Server Error | Skibidi Madness</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/errors.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="error-page">
+        <?php if (!empty($backgroundVideo)): ?>
+            <video autoplay muted loop playsinline class="error-video-bg">
+                <source src="<?= htmlspecialchars($backgroundVideo) ?>" type="video/mp4">
+            </video>
+        <?php endif; ?>
+        <div class="error-overlay"></div>
+        
+        <div class="error-content">
+            <h1 class="error-code">500</h1>
+            <h2 class="error-title">Multiverse Malfunction</h2>
+            <p class="error-text">
+                Houston, we have a problem! The Asotra forces have caused a dimensional rift in our systems. 
+                Our heroes are working to restore balance. Please try again in a moment.
+            </p>
+            <div class="error-actions">
+                <a href="/" class="error-btn error-btn-primary">Return Home</a>
+                <a href="javascript:history.back()" class="error-btn error-btn-secondary">Go Back</a>
+            </div>
+            
+            <?php if (ini_get('display_errors') && isset($errorMessage)): ?>
+            <div class="error-details">
+                <h3>Error Details (Development Mode):</h3>
+                <pre><?= htmlspecialchars($errorMessage) ?></pre>
+                <?php if (isset($errorTrace)): ?>
+                <pre><?= htmlspecialchars($errorTrace) ?></pre>
+                <?php endif; ?>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</body>
+</html>

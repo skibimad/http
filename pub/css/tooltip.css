@@ -1,0 +1,81 @@
+/** Simple Tooltip CSS **/
+.x-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.x-tooltip::after {
+    content: attr(x-tooltip);
+    position: absolute;
+    top: -2.9rem;
+    /* moved slightly higher to make room for arrow */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease-in-out;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    z-index: 10000;
+}
+
+.x-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -0.9rem;
+    /* positions arrow just above element */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-width: 8px 7px 0 7px;
+    border-style: solid;
+    border-color: #2a2a2a transparent transparent transparent;
+    opacity: 0;
+    transition: opacity 0.18s ease-in-out;
+    z-index: 10001;
+    pointer-events: none;
+}
+
+.x-tooltip:hover::after,
+.x-tooltip:hover::before {
+    opacity: 1;
+}
+
+/** Tooltip CSS **/
+.tooltipable {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip {
+    visibility: hidden;
+    width: auto;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transform: translateY(10px) scale(0.8);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out, visibility 0s linear 0.3s;
+}
+
+.tooltipable:hover>.tooltip {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: opacity 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+        transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+        visibility 0s linear 0s;
+}

@@ -1,0 +1,31 @@
+<?php
+
+use App\Helper\Resource;
+?>
+<section id="home" class="hero-section">
+    <div class="hero-background">
+        <video autoplay loop muted playsinline preload="metadata" class="hero-video background-video">
+            <!--source src="/pub/media/video/all-together.mp4" type="video/mp4"-->
+            <source src="<?php echo Resource::getRandomVideo(); ?>" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+        <h1 class="glitch-text" data-text="SKIBIDI MADNESS">
+            <span>SKIBIDI MADNESS</span>
+        </h1>
+        <p class="hero-subtitle">
+            <?= htmlspecialchars($this('getLandingContent')('home', 'hero_subtitle')) ?>
+        </p>
+        <p class="hero-description">
+            <?= $this('getLandingContent')('home', 'hero_description') ?>
+        </p>
+        <div class="hero-buttons">
+            <a href="#videos" class="btn btn-primary g-tag" data-gtag="cta_click" data-gtag-section="hero">Watch Now</a>
+            <a href="/youclick?y=<?php echo \App\Helper\YouChannel::getSubscribeButtonUrl(); ?>" target="_blank" class="btn btn-secondary g-tag" data-gtag="cta_click" data-gtag-section="hero">Subscribe</a>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="scroll-arrow"></div>
+    </div>
+</section>

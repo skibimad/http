@@ -1,0 +1,25 @@
+<section id="blog" class="blog-preview-section">
+    <div class="container">
+        <h2 class="section-title">Latest News</h2>
+        <p class="section-subtitle">
+            Stay updated with the latest news, behind-the-scenes content, and announcements
+        </p>
+        
+        <div class="blog-list">
+            <?php foreach ($this('blogPosts') ?? [] as $index => $post): ?>
+                <article id="<?=$post->getAnchor()?>" class="blog-item <?= $index % 2 === 0 ? 'even' : 'odd' ?>">
+                    <div class="blog-image">
+                        <img loading="lazy" src="/<?= htmlspecialchars(trim($post['image'], '/')) ?>" alt="<?= htmlspecialchars($post['title']) ?>" class="blog-item-image">
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title"><?= htmlspecialchars($post['title']) ?></h3>
+                        <div class="blog-meta">
+                            <?= htmlspecialchars($post['author']) ?> • <?= date('F j, Y', strtotime($post['published_at'])) ?>
+                        </div>
+                        <div class="blog-text"><?= $post['content'] ?></div>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>

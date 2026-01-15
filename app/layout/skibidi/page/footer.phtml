@@ -1,0 +1,62 @@
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>SKIBIDI MADNESS</h3>
+                <p>Where Chaos Meets Destiny</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Community</h4>
+                    <ul>
+                        
+                        <!--li><a href="/youclick?y=<?php echo \Fasty\Helper\YouChannel::getChannelUrl(); ?>" target="_blank">YouTube</a></li-->
+                        <?php $socialLinks = $this('socialLinks'); ?>
+                        <?php if ($socialLinks && !$socialLinks->isEmpty()): ?>
+                            <ul>
+                                <?php foreach ($socialLinks as $link): ?>
+                                    <li>
+                                        <a href="<?= htmlspecialchars($link['url']) ?>" target="_blank" class="g-tag" data-gtag="footer_link_click" data-gtag-footer-section="Community">
+                                            <?php if ($link['icon_class']): ?>
+                                                <i class="<?= htmlspecialchars($link['icon_class']) ?>"></i>
+                                            <?php endif; ?>
+                                            <?= htmlspecialchars($link['platform']) ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                        <li>
+                            <a href="https://www.youtube.com/@DaFuqBoom" target="_blank" style="font-style:italic;" class="g-tag" data-gtag="footer_link_click" data-gtag-footer-section="Community">
+                                <i class="fab fa-address-card"></i>
+                                Original Series
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="/#home" class="g-tag" data-gtag="footer_link_click" data-gtag-footer-section="Resources">Home</a></li>
+                        <li><a href="/#about" class="g-tag" data-gtag="footer_link_click" data-gtag-footer-section="Resources">About</a></li>
+                        <!--li><a href="/blog">Blog</a></li-->
+                        <li><a href="/#videos" class="g-tag" data-gtag="footer_link_click" data-gtag-footer-section="Resources">Episodes</a></li>
+                        <li><a href="/#heroes" class="g-tag" data-gtag="footer_link_click" data-gtag-footer-section="Resources">Heroes</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <?= date('Y') ?> FireStormX Studios. All rights reserved.</p>
+            <p class="footer-disclaimer">
+                Skibidi Madness is a fan-created series inspired by the Skibidi Toilet universe..
+                Not affiliated with original creators. All trademarks belong to their respective owners.
+            </p>
+            <p class="footer-disclaimer">
+                <small>Developed by <strong>Concept Labs</strong></small>
+                <small> & <a href="mailto:concept.galitsky@gmail.com" target="_blank">Victor Galitsky</a></small>
+            </p>
+        </div>
+    </div>
+</footer>

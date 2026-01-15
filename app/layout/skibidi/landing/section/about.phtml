@@ -1,0 +1,30 @@
+<section id="about" class="about-section">
+    <div class="container">
+        <h2 class="section-title"><?= htmlspecialchars($this('getLandingContent')('about', 'title')) ?></h2>
+        <div class="about-content">
+            <div class="about-text">
+                <?= $this('getLandingContent')('about', 'about_text') ?>
+            </div>
+            <div class="about-image">
+                <?php $aboutImage = $this('getLandingContent')('about', 'image'); ?>
+                <img loading="lazy" src="<?= htmlspecialchars($aboutImage ?: '/media/img/all-together.png') ?>" alt="All Heroes Together">
+                <div class="image-glow"></div>
+            </div>
+        </div>
+
+        <!-- Original References -->
+        <div class="original-references">
+            <h3>Inspired by the Original Skibidi Toilet Universe</h3>
+            <p>
+                This series builds upon the creative foundation established by the original Skibidi Toilet creators
+                and the vibrant community including DOM Studio, Virlance, Maxedy, and many other talented animators
+                who have expanded this universe.
+            </p>
+            <div class="reference-links">
+                <a href="https://www.youtube.com/@DaFuqBoom" target="_blank" class="ref-link g-tag" data-gtag="external_link_click" data-gtag-section="about">
+                    <span>DaFuq!?Boom! (Original Creator)</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

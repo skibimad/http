@@ -1,0 +1,47 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Skibidi Madness - A new story and adventures from the original series by FireStormX Studios.">
+<meta name="keywords" content="Skibidi Toilet, Skibidi Madness, FireStormX Studios, Titan Cameraman, Titan Speakerman, Titan TV Man, G-Man, animation series">
+<meta property="og:title" content="Skibidi Madness - Epic Multiverse Animation Series">
+<meta property="og:description" content="New story and adventures featuring chaos, battles across multiple universes">
+<meta property="og:image" content="/res/img/all-together.png">
+
+<title><?= $title ?? 'Skibidi Madness | FireStormX Studios' ?></title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<link rel="dns-prefetch" href="https://www.google-analytics.com">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script defer src="/js/main.js"></script>
+<script defer src="/js/gtag.js"></script>
+ 
+<script>
+    (function() {
+        const stored = localStorage.getItem('theme');
+        // Default to dark theme if no preference stored
+        let theme = 'dark';
+        if (stored === 'light') {
+            theme = 'light';
+        }
+        // Note: system theme option has been removed, defaults to dark
+        document.documentElement.setAttribute('data-theme', theme);
+    })();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-381ZLTG8Z7"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-381ZLTG8Z7');
+</script>

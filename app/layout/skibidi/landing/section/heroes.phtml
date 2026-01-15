@@ -1,0 +1,37 @@
+<?php
+/** @var Fasty\Model\CollectionInterface $heroes */
+$heroes = $this('heroes');
+?>
+<section id="heroes" class="heroes-section">
+    <div class="container">
+        <h2 class="section-title"><?= htmlspecialchars($this('getLandingContent')('heroes', 'title')) ?></h2>
+        <p class="section-subtitle">
+            <?= $this('getLandingContent')('heroes', 'subtitle') ?>
+        </p>
+
+        <div class="heroes-grid">
+            <?php foreach ($heroes as $hero): ?>
+                <!-- <?= htmlspecialchars($hero['name']) ?> -->
+                <div class="hero-card" data-hero="<?= htmlspecialchars($hero['slug']) ?>">
+                    <div class="hero-card-inner">
+                        <div class="hero-image-wrapper">
+                            <img loading="lazy" src="/<?= htmlspecialchars(trim($hero['image'], '/')) ?>" alt="<?= htmlspecialchars($hero['name']) ?>" class="hero-image">
+                            <video class="hero-video-preview" muted loop preload="none">
+                                <source src="/<?= htmlspecialchars(trim($hero['video'], '/')) ?>" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="hero-info">
+                            <h3 class="hero-name"><?= htmlspecialchars($hero['name']) ?></h3>
+                            <p class="hero-description"><?= $hero['description'] ?></p>
+                            <div class="hero-abilities">
+                                <?php foreach ($hero->getAbilities() as $ability): ?>
+                                    <span class="ability"><?= htmlspecialchars($ability) ?></span>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>

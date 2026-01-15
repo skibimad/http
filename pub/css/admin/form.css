@@ -1,0 +1,226 @@
+/* Form Container Styles */
+.form-container {
+    margin: 20px auto;
+    padding: 20px;
+    font-family: "YouTube Sans", "Roboto", sans-serif;
+    background-color: #0f0f0f;
+    min-height: 100vh;
+}
+
+.form-card {
+    background: #212121;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    padding: 30px;
+    border: 1px solid #3f3f3f;
+}
+
+.form-title {
+    font-size: 28px;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.form-title span {
+    font-size: 32px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    color: #aaaaaa;
+    margin-bottom: 8px;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #3f3f3f;
+    border-radius: 2px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    background-color: #121212;
+    color: #ffffff;
+    font-family: inherit;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #065fd4;
+    background-color: #1a1a1a;
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group textarea::placeholder {
+    color: #717171;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.4;
+}
+
+.form-group select {
+    padding: 0.5rem;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+.file-upload-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: start;
+}
+
+.file-input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.file-upload-area {
+    border: 2px dashed #3f3f3f;
+    border-radius: 2px;
+    padding: 40px 20px;
+    text-align: center;
+    transition: all 0.2s ease;
+    background: #181818;
+}
+
+.file-upload-area:hover {
+    border-color: #065fd4;
+    background: #1a1a1a;
+}
+
+.file-upload-area.dragover {
+    border-color: #065fd4;
+    background: #1a1a1a;
+    transform: scale(1.01);
+}
+
+.upload-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    opacity: 0.7;
+}
+
+.upload-text {
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.upload-subtext {
+    font-size: 12px;
+    color: #aaaaaa;
+    margin: 0;
+}
+
+.file-preview {
+    border: 1px solid #3f3f3f;
+    border-radius: 2px;
+    padding: 16px;
+    position: relative;
+    background: #181818;
+}
+
+.preview-image {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 2px;
+    display: block;
+    margin: 0 auto;
+}
+
+.remove-file {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #cc0000;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.remove-file:hover {
+    background: #ff0000;
+}
+
+.submit-btn {
+    width: 100%;
+    background: #065fd4;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.submit-btn:hover {
+    background: #4285f4;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.submit-btn:active {
+    background: #0449aa;
+}
+
+/* Scrollbar styling for textarea */
+.form-group textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+.form-group textarea::-webkit-scrollbar-track {
+    background: #2a2a2a;
+}
+
+.form-group textarea::-webkit-scrollbar-thumb {
+    background: #606060;
+    border-radius: 4px;
+}
+
+.form-group textarea::-webkit-scrollbar-thumb:hover {
+    background: #808080;
+}
