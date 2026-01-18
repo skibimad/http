@@ -22,8 +22,8 @@ $episode = $this('episode')
 
             <div class="form-group">
                 <label for="episode-image">Thumbnail</label>
-                 <?php if ($this('episode')['image']):?>
-                    <img height="100px" src="/<?= htmlspecialchars(trim($this('episode')['image'], '/')) ?>" alt="<?= htmlspecialchars($episode['title']) ?>" class="card-image">
+                 <?php if ($this('episode')['thumbnail']):?>
+                    <img height="100px" src="/<?= htmlspecialchars(trim($this('episode')['thumbnail'], '/')) ?>" alt="<?= htmlspecialchars($episode['title']) ?>" class="card-image">
                  <?php endif;?>
                 <div class="file-upload-wrapper">
                     <input type="file" id="episode-image" name="thumbnail[]" accept="image/*" class="file-input">
