@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initVideoAutoplay();
     initSmoothScroll();
     initAnnouncementBanner();
+    initPingPongVideos();
 });
 
 // Theme Switcher
@@ -249,6 +250,71 @@ function initVideoAutoplay() {
     videos.forEach(video => {
         videoObserver.observe(video);
     });
+}
+
+// Ping-Pong Video Loop - Play forward then backward continuously
+function initPingPongVideos() {
+    const videos = document.querySelectorAll('video');
+    
+    videos.forEach(video => {
+        // Track playback direction: 1 for forward, -1 for backward
+        video.dataset.direction = '1';
+        video.dataset.isReversing = 'false';
+        
+        video.addEventListener('ended', function() {
+            // When video ends (playing forward), start playing backward
+            if (this.dataset.direction === '1') {
+                this.dataset.direction = '-1';
+                this.dataset.isReversing = 'true';
+                playVideoBackward(this);
+            }
+        });
+        
+        video.addEventListener('play', function() {
+            // Reset to forward when video starts playing
+            if (this.currentTime === 0 && this.dataset.isReversing === 'false') {
+                this.dataset.direction = '1';
+            }
+        });
+    });
+}
+
+// Helper function to play video backward
+function playVideoBackward(video) {
+    const fps = 30; // frames per second
+    const frameTime = 1000 / fps; // milliseconds per frame
+    let lastFrameTime = performance.now();
+    
+    function reverseFrame(currentTime) {
+        if (video.dataset.isReversing === 'false') {
+            return; // Stop if no longer reversing
+        }
+        
+        const elapsed = currentTime - lastFrameTime;
+        
+        if (elapsed >= frameTime) {
+            // Move backward by a small time increment
+            video.currentTime = Math.max(0, video.currentTime - (elapsed / 1000));
+            lastFrameTime = currentTime;
+            
+            // Check if we've reached the beginning
+            if (video.currentTime <= 0.05) {
+                video.dataset.direction = '1';
+                video.dataset.isReversing = 'false';
+                // Start playing forward again
+                video.play().catch(err => {
+                    console.log('Video play prevented:', err);
+                });
+                return;
+            }
+        }
+        
+        // Continue the backward playback
+        requestAnimationFrame(reverseFrame);
+    }
+    
+    // Start the backward playback loop
+    requestAnimationFrame(reverseFrame);
 }
 
 // Smooth Scroll for Navigation Links
