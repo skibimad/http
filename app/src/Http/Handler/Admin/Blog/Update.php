@@ -2,6 +2,7 @@
 
 namespace App\Http\Handler\Admin\Blog;
 
+use Juzdy\Config;
 use App\Http\Handler\Admin\AdminHandler;
 use App\Model\BlogPost;
 use Juzdy\Http\RequestInterface;
@@ -96,7 +97,7 @@ class Update extends AdminHandler
     protected function uploadImage(BlogPost $post, RequestInterface $request): string
     {
         $uploader = new Uploader($request);
-        $uploadPath = \Juzdy\Config::get('path.uploads') . '/blog/posts/' . $post->getId() . '/';
+        $uploadPath = Config::get('path.uploads') . '/blog/posts/' . $post->getId() . '/';
 
         $uploads = $uploader->upload('post_image', $uploadPath);
 

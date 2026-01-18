@@ -3,6 +3,7 @@
 namespace App\Http\Handler\Admin\Episode;
 
 
+use Juzdy\Config;
 use Juzdy\Http\RequestInterface;
 use Juzdy\Http\ResponseInterface;
 use App\Http\Handler\Admin\AdminHandler;
@@ -94,7 +95,7 @@ class Update extends AdminHandler
     protected function uploadImage(Episode $episode, RequestInterface $request): string
     {
         $uploader = new Uploader($request);
-        $uploadPath = \Juzdy\Config::get('path.uploads') . '/episode/' . $episode->getId() . '/';
+        $uploadPath = Config::get('path.uploads') . '/episode/' . $episode->getId() . '/';
 
         $uploads = $uploader->upload('thumbnail', $uploadPath);
 
