@@ -39,12 +39,16 @@ $sectionsConfig = $this('sectionsConfig');
                                 </div>
                             <?php endif; ?>
                             <div class="file-upload-wrapper">
-                                <input type="file" id="<?= $fieldId ?>" name="landing_image_<?= $sectionKey ?>_<?= $fieldKey ?>" accept="image/*" class="file-input">
+                                <input type="file" id="<?= $fieldId ?>" name="landing_image_<?= $sectionKey ?>_<?= $fieldKey ?>[]" accept="image/*" class="file-input">
                                 <input type="hidden" name="<?= $fieldName ?>" value="<?= htmlspecialchars($currentValue) ?>">
                                 <div class="file-upload-area">
                                     <div class="upload-icon">📁</div>
                                     <p class="upload-text">Click to upload or drag and drop</p>
                                     <p class="upload-subtext">PNG, JPG, GIF up to 5MB</p>
+                                </div>
+                                <div class="file-preview hidden">
+                                    <img class="preview-image" src="" alt="Preview">
+                                    <button type="button" class="remove-file">×</button>
                                 </div>
                             </div>
                         <?php else: ?>

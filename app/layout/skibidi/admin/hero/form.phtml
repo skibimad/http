@@ -28,7 +28,7 @@ $hero = $this('hero');
                     <img height="100px" src="/<?= htmlspecialchars(trim($hero['image'], '/')) ?>" alt="<?= htmlspecialchars($hero['name'] ?? '') ?>" class="card-image">
                 <?php endif;?>
                 <div class="file-upload-wrapper">
-                    <input type="file" id="hero-image" name="hero_image" accept="image/*" class="file-input">
+                    <input type="file" id="hero-image" name="hero_image[]" accept="image/*" class="file-input">
                     <div class="file-upload-area">
                         <div class="upload-icon">📁</div>
                         <p class="upload-text">Click to upload or drag and drop</p>
@@ -49,11 +49,15 @@ $hero = $this('hero');
                     </video>
                 <?php endif;?>
                 <div class="file-upload-wrapper">
-                    <input type="file" id="hero-video" name="hero_video" accept="video/*" class="file-input">
+                    <input type="file" id="hero-video" name="hero_video[]" accept="video/*" class="file-input">
                     <div class="file-upload-area">
                         <div class="upload-icon">🎬</div>
                         <p class="upload-text">Click to upload or drag and drop</p>
                         <p class="upload-subtext">MP4, WebM up to 50MB</p>
+                    </div>
+                    <div class="file-preview hidden">
+                        <img class="preview-image" src="" alt="Preview">
+                        <button type="button" class="remove-file">×</button>
                     </div>
                 </div>
             </div>

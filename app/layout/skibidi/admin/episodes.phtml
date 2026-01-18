@@ -17,7 +17,7 @@
         </div>
         
         <div class="admin-card-excerpt">
-            <img height="100rem" src="/<?= htmlspecialchars(trim($episode['thumbnail'], '/')) ?>" alt="<?= htmlspecialchars($episode['title']) ?>" class="card-image">
+            <img height="100rem" src="<?= htmlspecialchars($episode['thumbnail']) ?>" alt="<?= htmlspecialchars($episode['title']) ?>" class="card-image">
             <p><?= htmlspecialchars(substr(strip_tags($episode['description'] ?? ''), 0, 150) . '...') ?></p>
         </div>
         
