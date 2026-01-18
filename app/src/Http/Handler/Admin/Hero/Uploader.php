@@ -29,8 +29,11 @@ class Uploader
             return $uploaded;
         }
         
+        // Normalize files array to handle both framework-normalized and raw PHP structures
+        $normalizedFiles = $this->normalizeFilesArray($files);
+        
         // Iterate through files
-        foreach ($files as $file) {
+        foreach ($normalizedFiles as $file) {
             // Skip if file is not an array or doesn't have required fields
             if (!is_array($file) || !isset($file['tmp_name'])) {
                 continue;
@@ -54,6 +57,52 @@ class Uploader
         
         return $uploaded;
         
+    }
+
+    /**
+     * Normalize files array to handle both structures:
+     * 1. Framework-normalized: [['name' => 'file.jpg', 'tmp_name' => '/tmp/...'], ...]
+     * 2. Raw PHP array notation: ['name' => ['file.jpg'], 'tmp_name' => ['/tmp/...'], ...]
+     *
+     * @param array $files
+     * @return array
+     */
+    protected function normalizeFilesArray(array $files): array
+    {
+        // If already normalized (first element is an array with 'tmp_name' key)
+        if (isset($files[0]) && is_array($files[0]) && isset($files[0]['tmp_name'])) {
+            return $files;
+        }
+        
+        // Check if this is PHP's array notation structure
+        // ['name' => [...], 'tmp_name' => [...], 'error' => [...], ...]
+        if (isset($files['name']) && is_array($files['name']) && 
+            isset($files['tmp_name']) && is_array($files['tmp_name'])) {
+            
+            // Convert PHP array notation to normalized format
+            $normalized = [];
+            $fileCount = count($files['name']);
+            
+            for ($i = 0; $i < $fileCount; $i++) {
+                $normalized[] = [
+                    'name' => $files['name'][$i] ?? '',
+                    'type' => $files['type'][$i] ?? '',
+                    'tmp_name' => $files['tmp_name'][$i] ?? '',
+                    'error' => $files['error'][$i] ?? UPLOAD_ERR_NO_FILE,
+                    'size' => $files['size'][$i] ?? 0,
+                ];
+            }
+            
+            return $normalized;
+        }
+        
+        // If it's a single file (not an array of files)
+        if (isset($files['tmp_name']) && is_string($files['tmp_name'])) {
+            return [$files];
+        }
+        
+        // Return as-is and let validation handle it
+        return $files;
     }
 
     public function uploadFile(array $fileData, string $to): string|false
