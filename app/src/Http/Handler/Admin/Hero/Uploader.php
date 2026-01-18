@@ -20,14 +20,36 @@ class Uploader
     public function upload(string $key, string $to): array
     {
         $uploaded = [];
-
-        foreach ($this->getRequest()->files($key) as $file) {
-            // Skip if no file was uploaded or if there's an upload error
-            if (empty($file['tmp_name']) || !empty($file['error'])) {
+        
+        // Get files from request
+        $files = $this->getRequest()->files($key);
+        
+        // Handle empty case
+        if (empty($files)) {
+            return $uploaded;
+        }
+        
+        // Iterate through files
+        foreach ($files as $file) {
+            // Skip if file is not an array or doesn't have required fields
+            if (!is_array($file) || !isset($file['tmp_name'])) {
                 continue;
             }
             
-            $uploaded[] = $this->uploadFile($file, $to);
+            // Skip if no file was uploaded or if there's an upload error
+            if (empty($file['tmp_name']) || !empty($file['error']) || $file['error'] !== 0) {
+                continue;
+            }
+            
+            // Validate the upload
+            if (!is_uploaded_file($file['tmp_name'])) {
+                continue;
+            }
+            
+            $result = $this->uploadFile($file, $to);
+            if ($result) {
+                $uploaded[] = $result;
+            }
         }
         
         return $uploaded;
@@ -36,20 +58,25 @@ class Uploader
 
     public function uploadFile(array $fileData, string $to): string|false
     {
+        // Validate required fields
+        if (!isset($fileData['tmp_name'], $fileData['name'])) {
+            return false;
+        }
+        
         $tmp_name = $fileData['tmp_name'];
         $fileext = pathinfo($fileData['name'], PATHINFO_EXTENSION);
         $filename = uniqid('hero_', true) . '.' . $fileext;
         $filePath = $to . $filename;
 
+        // Create directory if it doesn't exist
         if (!is_dir($to)) {
-           
-            mkdir($to, 0755, true);
+            if (!mkdir($to, 0755, true) && !is_dir($to)) {
+                return false;
+            }
         }
 
-        $success = move_uploaded_file(
-            $tmp_name,
-            $filePath
-        );
+        // Move uploaded file
+        $success = move_uploaded_file($tmp_name, $filePath);
 
         return $success ? $filename : false;
     }
