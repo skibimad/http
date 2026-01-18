@@ -13,7 +13,7 @@
 <body>
     <div class="error-page">
         <?php if (!empty($backgroundVideo)): ?>
-            <video autoplay muted loop playsinline class="error-video-bg">
+            <video autoplay muted playsinline class="error-video-bg">
                 <source src="<?= htmlspecialchars($backgroundVideo) ?>" type="video/mp4">
             </video>
         <?php endif; ?>

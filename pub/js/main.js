@@ -2,6 +2,9 @@
 
 // Constants
 const MOBILE_BREAKPOINT = 768;
+const VIDEO_PLAYBACK_FPS = 30; // Frames per second for backward video playback
+const VIDEO_START_THRESHOLD = 0.01; // Threshold in seconds to detect video at start
+const VIDEO_END_THRESHOLD = 0.05; // Threshold in seconds to detect video at end
 
 // Throttle utility function for scroll performance
 function throttle(func, limit) {
@@ -33,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initVideoAutoplay();
     initSmoothScroll();
     initAnnouncementBanner();
+    initPingPongVideos();
 });
 
 // Theme Switcher
@@ -168,6 +172,8 @@ function initHeroCards() {
                 // Reset transform
                 this.style.transform = '';
                 
+                // Stop ping-pong animation and pause
+                video.dataset.isReversing = 'false';
                 video.pause();
                 video.currentTime = 0;
             });
@@ -249,6 +255,71 @@ function initVideoAutoplay() {
     videos.forEach(video => {
         videoObserver.observe(video);
     });
+}
+
+// Ping-Pong Video Loop - Play forward then backward continuously
+function initPingPongVideos() {
+    const videos = document.querySelectorAll('video');
+    
+    videos.forEach(video => {
+        // Track playback direction: 1 for forward, -1 for backward
+        video.dataset.direction = '1';
+        video.dataset.isReversing = 'false';
+        
+        video.addEventListener('ended', function() {
+            // When video ends (playing forward), start playing backward
+            if (this.dataset.direction === '1') {
+                this.dataset.direction = '-1';
+                this.dataset.isReversing = 'true';
+                playVideoBackward(this);
+            }
+        });
+        
+        video.addEventListener('play', function() {
+            // Reset to forward when video starts playing from the beginning
+            if (this.currentTime < VIDEO_START_THRESHOLD && this.dataset.isReversing === 'false') {
+                this.dataset.direction = '1';
+            }
+        });
+    });
+}
+
+// Helper function to play video backward
+function playVideoBackward(video) {
+    const frameTime = 1000 / VIDEO_PLAYBACK_FPS; // milliseconds per frame
+    let lastFrameTime = performance.now();
+    
+    function reverseFrame(currentTime) {
+        if (video.dataset.isReversing === 'false') {
+            return; // Stop if no longer reversing
+        }
+        
+        const elapsed = currentTime - lastFrameTime;
+        
+        if (elapsed >= frameTime) {
+            // Move backward by elapsed time to maintain consistent playback speed
+            // This ensures backward speed matches forward speed regardless of device performance
+            video.currentTime = Math.max(0, video.currentTime - (elapsed / 1000));
+            lastFrameTime = currentTime;
+            
+            // Check if we've reached the beginning
+            if (video.currentTime <= VIDEO_START_THRESHOLD) {
+                video.dataset.direction = '1';
+                video.dataset.isReversing = 'false';
+                // Start playing forward again
+                video.play().catch(err => {
+                    console.log('Ping-pong video autoplay prevented:', err);
+                });
+                return;
+            }
+        }
+        
+        // Continue the backward playback
+        requestAnimationFrame(reverseFrame);
+    }
+    
+    // Start the backward playback loop
+    requestAnimationFrame(reverseFrame);
 }
 
 // Smooth Scroll for Navigation Links
