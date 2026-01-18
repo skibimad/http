@@ -1,5 +1,8 @@
 // Skibidi Madness - Main JavaScript
 
+// Constants
+const MOBILE_BREAKPOINT = 768;
+
 // Throttle utility function for scroll performance
 function throttle(func, limit) {
     let inThrottle;
@@ -174,38 +177,56 @@ function initHeroCards() {
 
 // Scroll Animations
 function initScrollAnimations() {
-    // Observer for fade-in animations
+    // Observer for fade-in animations with enhanced effects
     const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.15,
+        rootMargin: '0px 0px -80px 0px'
     };
     
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                entry.target.classList.add('active');
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
             }
         });
     }, observerOptions);
     
-    // Observe sections
+    // Observe sections with reveal class
     const sections = document.querySelectorAll('section');
     sections.forEach(section => {
+        section.classList.add('reveal');
         section.style.opacity = '0';
-        section.style.transform = 'translateY(30px)';
-        section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        section.style.transform = 'translateY(40px)';
+        section.style.transition = 'opacity 1s cubic-bezier(0.34, 1.56, 0.64, 1), transform 1s cubic-bezier(0.34, 1.56, 0.64, 1)';
         observer.observe(section);
     });
     
-    // Observe cards
-    const cards = document.querySelectorAll('.hero-card, .video-card');
+    // Observe cards with staggered animation
+    const cards = document.querySelectorAll('.hero-card, .video-card, .blog-card');
     cards.forEach((card, index) => {
+        card.classList.add('reveal');
         card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+        card.style.transform = 'translateY(40px) scale(0.95)';
+        card.style.transition = `opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.1}s, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.1}s`;
         observer.observe(card);
     });
+    
+    // Enhanced navbar scroll effect
+    const navbar = document.querySelector('.navbar');
+    
+    window.addEventListener('scroll', throttle(function() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > 100) {
+            navbar.style.background = 'rgba(13, 13, 18, 0.90)';
+            navbar.style.boxShadow = '0 8px 40px rgba(0, 0, 0, 0.8), 0 0 100px rgba(255, 45, 120, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
+        } else {
+            navbar.style.background = 'rgba(13, 13, 18, 0.75)';
+            navbar.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.6), 0 0 80px rgba(255, 45, 120, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05)';
+        }
+    }, 100));
 }
 
 // Video Autoplay for Channel Section
@@ -437,3 +458,88 @@ if ('ontouchstart' in window) {
         });
     });
 }
+
+// ====================================
+// V2 ENHANCEMENTS - Additional Effects
+// ====================================
+
+// Add parallax effect to hero section
+function initParallaxEffect() {
+    const heroSection = document.querySelector('.hero-section');
+    if (!heroSection) return;
+    
+    window.addEventListener('scroll', throttle(function() {
+        const scrolled = window.pageYOffset;
+        const parallaxSpeed = 0.5;
+        
+        if (scrolled < window.innerHeight) {
+            heroSection.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+        }
+    }, 16));
+}
+
+// Add cursor glow effect for cards (desktop only)
+function initCursorGlow() {
+    if (window.innerWidth < MOBILE_BREAKPOINT) return;
+    
+    const cards = document.querySelectorAll('.hero-card, .video-card, .blog-card');
+    
+    cards.forEach(card => {
+        card.addEventListener('mousemove', function(e) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+}
+
+// Enhanced page load animation
+function initPageLoadAnimation() {
+    const loading = document.querySelector('.loading');
+    if (!loading) return;
+    
+    // Ensure smooth fade out
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            loading.classList.add('hidden');
+        }, 500);
+    });
+}
+
+// Add magnetic effect to buttons (desktop only)
+function initMagneticButtons() {
+    if (window.innerWidth < MOBILE_BREAKPOINT) return;
+    
+    const buttons = document.querySelectorAll('.btn');
+    
+    buttons.forEach(button => {
+        button.addEventListener('mousemove', function(e) {
+            const rect = button.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            const maxMove = 8;
+            const moveX = (x / rect.width) * maxMove;
+            const moveY = (y / rect.height) * maxMove;
+            
+            button.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.02)`;
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            button.style.transform = '';
+        });
+    });
+}
+
+// Initialize V2 enhancements
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        initParallaxEffect();
+        initCursorGlow();
+        initPageLoadAnimation();
+        initMagneticButtons();
+    }, 100);
+});
