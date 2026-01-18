@@ -7,6 +7,7 @@ use App\Http\Handler\Admin\AdminHandler;
 use App\Model\BlogPost;
 use Juzdy\Http\RequestInterface;
 use Juzdy\Http\ResponseInterface;
+use App\Http\Handler\Admin\Blog\Uploader;
 
 class Update extends AdminHandler
 {

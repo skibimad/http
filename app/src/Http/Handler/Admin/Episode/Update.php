@@ -8,6 +8,7 @@ use Juzdy\Http\RequestInterface;
 use Juzdy\Http\ResponseInterface;
 use App\Http\Handler\Admin\AdminHandler;
 use App\Model\Episode;
+use App\Http\Handler\Admin\Episode\Uploader;
 
 class Update extends AdminHandler
 {
