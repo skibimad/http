@@ -631,6 +631,7 @@ body {
     font-family: var(--font-heading);
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 900;
+    color: var(--color-primary); /* Fallback for browsers that don't support background-clip */
     background: linear-gradient(135deg, var(--color-primary), var(--color-secondary), var(--color-accent-purple));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
