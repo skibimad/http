@@ -56,7 +56,7 @@ class Put extends AdminHandler
         return true;
     }
 
-    protected function uploadImage(Episode$episode, RequestInterface $request): string
+    protected function uploadImage(Episode $episode, RequestInterface $request): string
     {
         $uploader = new Uploader($request);
         $uploadPath = Config::get('path.uploads') . '/episode/' . $episode->getId() . '/';
