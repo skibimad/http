@@ -169,6 +169,8 @@ function initHeroCards() {
                 // Reset transform
                 this.style.transform = '';
                 
+                // Stop ping-pong animation and pause
+                video.dataset.isReversing = 'false';
                 video.pause();
                 video.currentTime = 0;
             });
