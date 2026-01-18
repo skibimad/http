@@ -5,16 +5,16 @@
 
 /* CSS Variables - Base values (shared between themes) */
 :root {
-    /* Primary Colors - Dark, gritty tones */
-    --color-primary: #ff3366;
-    --color-primary-dark: #cc0033;
-    --color-primary-light: #ff6699;
+    /* Primary Colors - Fresh, vibrant tones */
+    --color-primary: #ff2d78;
+    --color-primary-dark: #e6145a;
+    --color-primary-light: #ff5c99;
     
-    /* Secondary Colors - Neon accents */
-    --color-secondary: #00ffcc;
-    --color-secondary-dark: #00cc99;
-    --color-accent: #ffcc00;
-    --color-accent-purple: #9933ff;
+    /* Secondary Colors - Fresh neon accents */
+    --color-secondary: #00f5d4;
+    --color-secondary-dark: #00d4b8;
+    --color-accent: #ffd93d;
+    --color-accent-purple: #a259ff;
     
     /* Fonts */
     --font-heading: 'Orbitron', sans-serif;
@@ -37,27 +37,27 @@
     --youtube-red-dark: #cc0000;
     
     /* Effects */
-    --glow-primary: 0 0 20px rgba(255, 51, 102, 0.5);
-    --glow-secondary: 0 0 20px rgba(0, 255, 204, 0.5);
-    --glow-accent: 0 0 20px rgba(255, 204, 0, 0.5);
+    --glow-primary: 0 0 25px rgba(255, 45, 120, 0.6);
+    --glow-secondary: 0 0 25px rgba(0, 245, 212, 0.6);
+    --glow-accent: 0 0 25px rgba(255, 217, 61, 0.6);
 }
 
 /* Dark Theme (Default) */
 :root,
 [data-theme="dark"] {
     /* Background Colors */
-    --color-bg-primary: #0a0a0f;
-    --color-bg-secondary: #141419;
-    --color-bg-tertiary: #1e1e28;
-    --color-bg-card: rgba(30, 30, 40, 0.8);
+    --color-bg-primary: #0d0d12;
+    --color-bg-secondary: #16161e;
+    --color-bg-tertiary: #1f1f2e;
+    --color-bg-card: rgba(31, 31, 46, 0.85);
     
     /* Text Colors */
     --color-text-primary: #ffffff;
-    --color-text-secondary: #b0b0c0;
-    --color-text-muted: #707080;
+    --color-text-secondary: #c0c0d0;
+    --color-text-muted: #808090;
     
     /* RGB values for backgrounds with opacity */
-    --color-bg-primary-rgb: 10, 10, 15;
+    --color-bg-primary-rgb: 13, 13, 18;
 }
 
 /* Light Theme */
@@ -243,10 +243,10 @@ body {
     left: 0;
     width: 100%;
     z-index: 999;
-    background: rgba(10, 10, 15, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 2px solid var(--color-primary);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    background: rgba(13, 13, 18, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 45, 120, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 .navbar .container {
@@ -631,16 +631,25 @@ body {
     font-family: var(--font-heading);
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 900;
-    color: var(--color-primary);
-    text-shadow: 
-        0 0 10px rgba(255, 51, 102, 0.8),
-        0 0 20px rgba(255, 51, 102, 0.6),
-        0 0 30px rgba(255, 51, 102, 0.4),
-        2px 2px 0 var(--color-secondary);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary), var(--color-accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: gradientShift 4s ease infinite, glitch 2s infinite;
     letter-spacing: 0.1em;
     margin-bottom: var(--spacing-sm);
     position: relative;
-    animation: glitch 2s infinite;
+    filter: drop-shadow(0 0 20px rgba(255, 45, 120, 0.5));
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 @keyframes glitch {
@@ -707,11 +716,13 @@ body {
     text-decoration: none;
     text-align: center;
     border-radius: 50px;
-    transition: var(--transition-normal);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     border: 2px solid transparent;
     position: relative;
     overflow: hidden;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .btn::before {
@@ -733,28 +744,29 @@ body {
 }
 
 .btn-primary {
-    background: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
     color: var(--color-text-primary);
-    box-shadow: var(--glow-primary);
+    box-shadow: var(--glow-primary), 0 8px 24px rgba(255, 45, 120, 0.3);
 }
 
 .btn-primary:hover {
-    background: var(--color-primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(255, 51, 102, 0.8);
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 35px rgba(255, 45, 120, 0.9), 0 12px 32px rgba(255, 45, 120, 0.4);
 }
 
 .btn-secondary {
-    background: transparent;
+    background: rgba(0, 245, 212, 0.1);
     color: var(--color-secondary);
     border: 2px solid var(--color-secondary);
+    backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
     background: var(--color-secondary);
     color: var(--color-bg-primary);
-    transform: translateY(-2px);
-    box-shadow: var(--glow-secondary);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--glow-secondary), 0 8px 24px rgba(0, 245, 212, 0.4);
 }
 
 .scroll-indicator {
@@ -837,11 +849,24 @@ section {
 /* About Section */
 .about-section {
     background: linear-gradient(
-        to bottom,
+        180deg,
         var(--color-bg-primary) 0%,
-        var(--color-bg-secondary) 50%,
+        rgba(31, 31, 46, 0.5) 50%,
         var(--color-bg-primary) 100%
     );
+    position: relative;
+}
+
+.about-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255, 45, 120, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(0, 245, 212, 0.06) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .about-content {
@@ -970,12 +995,13 @@ section {
 .hero-card {
     background: var(--color-bg-card);
     border: 2px solid var(--color-primary);
-    border-radius: 20px;
+    border-radius: 24px;
     overflow: hidden;
-    transition: var(--transition-normal);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     position: relative;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .hero-card::before {
@@ -985,15 +1011,15 @@ section {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(255, 51, 102, 0.1) 0%, transparent 50%);
+    background: linear-gradient(135deg, rgba(255, 45, 120, 0.15) 0%, rgba(162, 89, 255, 0.1) 100%);
     opacity: 0;
-    transition: var(--transition-normal);
+    transition: opacity 0.4s ease;
     pointer-events: none;
 }
 
 .hero-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 60px rgba(255, 51, 102, 0.4);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(255, 45, 120, 0.5), 0 0 0 1px rgba(0, 245, 212, 0.3);
     border-color: var(--color-secondary);
 }
 
@@ -1074,10 +1100,22 @@ section {
 /* Videos Section */
 .videos-section {
     background: linear-gradient(
-        to bottom,
+        180deg,
         var(--color-bg-primary) 0%,
-        var(--color-bg-secondary) 100%
+        rgba(22, 22, 30, 0.8) 100%
     );
+    position: relative;
+}
+
+.videos-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 20%, rgba(162, 89, 255, 0.08) 0%, transparent 60%);
+    pointer-events: none;
 }
 
 .videos-grid {
@@ -1089,15 +1127,17 @@ section {
 .video-card {
     background: var(--color-bg-card);
     border: 2px solid var(--color-accent-purple);
-    border-radius: 20px;
+    border-radius: 24px;
     overflow: hidden;
-    transition: var(--transition-normal);
-    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .video-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(153, 51, 255, 0.4);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(162, 89, 255, 0.5), 0 0 0 1px rgba(255, 217, 61, 0.3);
+    border-color: var(--color-accent);
 }
 
 .video-thumbnail {

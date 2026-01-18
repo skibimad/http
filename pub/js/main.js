@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollAnimations();
     initVideoAutoplay();
     initSmoothScroll();
+    initAnnouncementBanner();
 });
 
 // Theme Switcher
@@ -142,7 +143,7 @@ function initNavigation() {
     window.addEventListener('scroll', handleNavbarScroll, { passive: true });
 }
 
-// Hero Cards - Video Preview on Hover
+/* Hero Cards - Video Preview on Hover */
 function initHeroCards() {
     const heroCards = document.querySelectorAll('.hero-card');
     
@@ -151,6 +152,9 @@ function initHeroCards() {
         
         if (video) {
             card.addEventListener('mouseenter', function() {
+                // Add scale effect
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+                
                 video.play().catch(err => {
                     // Autoplay might be blocked, ignore the error
                     console.log('Video autoplay prevented:', err);
@@ -158,6 +162,9 @@ function initHeroCards() {
             });
             
             card.addEventListener('mouseleave', function() {
+                // Reset transform
+                this.style.transform = '';
+                
                 video.pause();
                 video.currentTime = 0;
             });
@@ -251,6 +258,23 @@ function initSmoothScroll() {
             }
         });
     });
+}
+
+// Auto-hide announcement banner after 5 seconds
+function initAnnouncementBanner() {
+    const banner = document.querySelector('.version-announcement');
+    if (banner) {
+        setTimeout(function() {
+            banner.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            banner.style.opacity = '0';
+            banner.style.transform = 'translateY(-20px)';
+            
+            // Remove from DOM after animation completes
+            setTimeout(function() {
+                banner.remove();
+            }, 800);
+        }, 5000);
+    }
 }
 
 // Parallax effect for hero section (throttled for performance)
