@@ -68,6 +68,11 @@ class Update extends AdminHandler
         )
         ->save();
 
+        // Upload image if provided
+        $imagePath = $this->uploadImage($post, $request);
+        if ($imagePath) {
+            $post->set('image', $imagePath)->save();
+        }
     }
 
     /**
@@ -81,5 +86,23 @@ class Update extends AdminHandler
         return true;
     }
 
-    
-}
+    /**
+     * Handle image upload for the blog post
+     *
+     * @param BlogPost $post
+     * @param RequestInterface $request
+     * @return string
+     */
+    protected function uploadImage(BlogPost $post, RequestInterface $request): string
+    {
+        $uploader = new Uploader($request);
+        $uploadPath = \Juzdy\Config::get('path.uploads') . '/blog/posts/' . $post->getId() . '/';
+
+        $uploads = $uploader->upload('post_image', $uploadPath);
+
+        if (!isset($uploads[0]) || !$uploads[0]) {
+            return '';
+        }
+
+        return '/uploads/blog/posts/' . $post->getId() . '/' . $uploads[0];
+    }
