@@ -75,7 +75,7 @@ class Put extends AdminHandler
             return '';
         }
 
-        return $uploadPath.$uploads[0];
+        return '/uploads/blog/posts/' . $post->getId() . '/' . $uploads[0];
     }
 
     
