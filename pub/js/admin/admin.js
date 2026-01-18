@@ -49,11 +49,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const files = e.dataTransfer.files;
             if (files.length > 0) {
-                // Create a new FileList-like object
+                // Set the file input's files property for form submission
                 const dt = new DataTransfer();
                 dt.items.add(files[0]);
                 fileInput.files = dt.files;
                 
+                // Trigger the file selection handler
                 handleFileSelect(fileInput, uploadArea, filePreview, previewImage);
             }
         });
