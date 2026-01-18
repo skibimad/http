@@ -79,9 +79,16 @@ class Uploader
         if (isset($files['name']) && is_array($files['name']) && 
             isset($files['tmp_name']) && is_array($files['tmp_name'])) {
             
+            // Validate that all arrays have the same length
+            $fileCount = count($files['name']);
+            if ($fileCount !== count($files['tmp_name']) || 
+                (isset($files['error']) && $fileCount !== count($files['error']))) {
+                // Inconsistent array structure, return empty to skip processing
+                return [];
+            }
+            
             // Convert PHP array notation to normalized format
             $normalized = [];
-            $fileCount = count($files['name']);
             
             for ($i = 0; $i < $fileCount; $i++) {
                 $normalized[] = [
