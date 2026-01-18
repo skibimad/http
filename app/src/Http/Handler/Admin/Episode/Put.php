@@ -59,17 +59,15 @@ class Put extends AdminHandler
     protected function uploadImage(Episode$episode, RequestInterface $request): string
     {
         $uploader = new Uploader($request);
-        $uploadPath = Config::get('upload_dir') . 'episode/'.$episode->getId().'/';
+        $uploadPath = Config::get('path.uploads') . '/episode/' . $episode->getId() . '/';
 
-        $fullPath = Config::get('root') . 'public' . $uploadPath;
-
-        $uploads = $uploader->upload('thumbnail', $fullPath);
+        $uploads = $uploader->upload('thumbnail', $uploadPath);
 
         if (!isset($uploads[0]) || !$uploads[0]) {
             return '';
         }
 
-        return $uploadPath.$uploads[0];
+        return '/uploads/episode/' . $episode->getId() . '/' . $uploads[0];
     }
 
     

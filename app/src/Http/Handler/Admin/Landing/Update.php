@@ -84,20 +84,19 @@ class Update extends AdminHandler
         }
         
         // Generate upload path
-        $uploadDir = Config::get('upload_dir') . 'landing/';
-        $fullPath = Config::get('root') . 'public' . $uploadDir;
+        $uploadPath = Config::get('path.uploads') . '/landing/';
         
-        if (!is_dir($fullPath)) {
-            mkdir($fullPath, 0755, true);
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
         }
         
         // Generate unique filename
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $filename = uniqid("{$section}_{$fieldKey}_", true) . '.' . $extension;
-        $filePath = $fullPath . $filename;
+        $filePath = $uploadPath . $filename;
         
         if (move_uploaded_file($file['tmp_name'], $filePath)) {
-            return $uploadDir . $filename;
+            return '/uploads/landing/' . $filename;
         }
         
         return null;
