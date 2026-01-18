@@ -1,22 +1,40 @@
 <?php
-namespace App\Controller\Admin\Blog;
+namespace App\Http\Handler\Admin\Blog;
 
+use Juzdy\Http\RequestInterface;
 use Juzdy\Request;
 
 class Uploader
 {
     
 
+    /**
+     * Constructor
+     *
+     * @param RequestInterface $request
+     */
     public function __construct(
-        private Request $request
+        private RequestInterface $request
     )
     {}
 
-    protected function getRequest()
+    /**
+     * Get the current request instance
+     *
+     * @return RequestInterface
+     */
+    protected function getRequest(): RequestInterface
     {
         return $this->request;
     }
 
+    /**
+     * Upload files from the request
+     *
+     * @param string $key
+     * @param string $to
+     * @return array
+     */
     public function upload(string $key, string $to): array
     {
         $uploaded = [];
@@ -29,6 +47,13 @@ class Uploader
         
     }
 
+    /**
+     * Upload a single file
+     *
+     * @param array $fileData
+     * @param string $to
+     * @return string|false
+     */
     public function uploadFile(array $fileData, string $to): string|false
     {
         $tmp_name = $fileData['tmp_name'];
@@ -37,8 +62,7 @@ class Uploader
         $filePath = $to . $filename;
 
         if (!is_dir($to)) {
-           
-            mkdir($to, 0755, true);
+            @mkdir($to, 0755, true);
         }
 
         $success = move_uploaded_file(

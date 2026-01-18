@@ -27,7 +27,6 @@
             href="/admin/episode/status?id=<?= $episode->getId() ?>&status=<?= $episode->isEnabled() ? 0 : 1 ?>" class="btn-small <?= $episode->isEnabled() ? 'btn-warning x-tooltip' : 'btn-edit x-tooltip' ?>">
             <i class="fas fa-<?= $episode->isEnabled() ? 'eye-slash' : 'eye' ?>"></i>
             </a>
-            <a x-tooltip="Open on Page" target="_blank" href="/episodes/#<?=$episode->getAnchor()?>" class="btn-small btn-edit x-tooltip"><i class="fas fa-external-link-alt"></i></a>
             <a x-tooltip="Delete" href="/admin/episode/delete?id=<?= $episode->getId() ?>" class="btn-small btn-danger x-tooltip"
                onclick="return confirm('Are you sure you want to delete this episode?')">
                 <i class="fas fa-trash-alt"></i>

@@ -1,22 +1,33 @@
 <?php
+namespace App\Http\Handler\Admin\Hero;
 
-namespace App\Controller\Admin\Hero;
 
-use App\Controller\AdminController;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
+use App\Http\Handler\Admin\AdminHandler;
 use App\Model\Hero;
 
-class Add extends AdminController
+class Add extends AdminHandler
 {
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
-        $this->render(
-            'admin/hero/form',
+        return $this->layout(
+            'skibidi/admin',
+            'hero/form',
             [
                 'hero' => $this->getHero()
             ]
         );
     }
 
+    /**
+     * Retrieve a new hero instance
+     *
+     * @return Hero
+     */
     protected function getHero(): Hero
     {
         return new Hero();

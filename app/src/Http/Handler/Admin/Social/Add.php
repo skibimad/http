@@ -1,16 +1,22 @@
 <?php
 
-namespace App\Controller\Admin\Social;
+namespace App\Http\Handler\Admin\Social;
 
-use App\Controller\AdminController;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
+use App\Http\Handler\Admin\AdminHandler;
 use App\Model\SocialLink;
 
-class Add extends AdminController
+class Add extends AdminHandler
 {
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
-        $this->render(
-            'admin/social/form',
+        return $this->layout(
+            'skibidi/admin',
+            'social/form',
             [
                 'socialLink' => new SocialLink()
             ]

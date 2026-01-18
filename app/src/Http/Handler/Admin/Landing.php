@@ -1,19 +1,21 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Http\Handler\Admin;
 
-use App\Controller\AdminController;
 use App\Model\LandingPageContent;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 
-class Landing extends AdminController
+class Landing extends AdminHandler
 {
-    public function handle(): void
+    public function handle(RequestInterface $request): ResponseInterface
     {
         $sections = LandingPageContent::getAllSections();
         $sectionsConfig = LandingPageContent::getSectionsConfig();
 
-        $this->render(
-            'admin/landing',
+        return $this->layout(
+            'skibidi/admin',
+            'landing',
             [
                 'sections' => $sections,
                 'sectionsConfig' => $sectionsConfig,

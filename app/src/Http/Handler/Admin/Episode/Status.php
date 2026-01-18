@@ -1,35 +1,46 @@
 <?php
 
-namespace App\Controller\Admin\Episode;
+namespace App\Http\Handler\Admin\Episode;
 
-use App\Controller\AdminController;
-use Juzdy\Model\CollectionInterface;
+
+use Juzdy\Http\RequestInterface;
 use App\Model\Episode;
+use App\Http\Handler\Admin\AdminHandler;
+use Juzdy\Http\ResponseInterface;
 
-class Status extends AdminController
+class Status extends AdminHandler
 {
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
         //try {
-        if ($this->getRequest()->isGet()) {
-            $this->updateEpisode();
+        if ($request->isGet()) {
+            $this->updateEpisode($request);
         }
-        $this->redirectReferer();
+
+        return $this->redirectReferer($request);
     }
 
-    protected function findEpisode()
+    protected function findEpisode(RequestInterface $request): Episode
     {
         $post = new Episode();
-        $post->load($this->getRequest('id'));
+        $post->load($request('id'));
 
         return $post;
     }
 
-    protected function updateEpisode()
+    /**
+     * Update the episode based on request data
+     *
+     * @param RequestInterface $request
+     */
+    protected function updateEpisode(RequestInterface $request): void
     {
         $data = [
-            'id' => $this->getRequest('id'),
-            'status' => $this->getRequest('status'),
+            'id' => $request('id'),
+            'status' => $request('status'),
         ];
         
         $this->assertValid($data);
@@ -46,6 +57,12 @@ class Status extends AdminController
 
     }
 
+    /**
+     * Validate the episode data
+     *
+     * @param array $data
+     * @return bool
+     */
     protected function assertValid(array &$data)
     {
         return isset($data['id']) && isset($data['status']);

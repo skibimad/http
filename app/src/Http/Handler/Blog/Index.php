@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller\Blog;
+namespace App\Http\Handler\Blog;
 
 use Juzdy\Model\Collection;
 use App\Model\BlogPost;
@@ -11,12 +11,12 @@ class Index extends Handler
 {
     public function handle(RequestInterface $request): ResponseInterface
     {
-        $this->render(
+        return $this->layout(
+            'skibidi',
             'blog/index', 
             [
                 'blogPosts' => $this->getBlogPosts(),
             ],
-            'skibidi'
     );
         
     }

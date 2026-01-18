@@ -13,13 +13,6 @@ use Juzdy\Request;
  */
 class AuthMiddleware implements MiddlewareInterface
 {
-    /**
-     * Routes that should be excluded from authentication check
-     */
-    private const EXCLUDED_ROUTES = [
-        'admin/login',
-        'admin/logout',
-    ];
 
     /**
      * Process the request.
@@ -29,16 +22,7 @@ class AuthMiddleware implements MiddlewareInterface
      * @return void
      */
     public function process(Request $request, RequestHandlerInterface $handler): void
-    {
-        // Get current route
-        $route = $request->query('q') ?? '';
-        
-        // Skip authentication for excluded routes
-        if ($this->isExcludedRoute($route)) {
-            $handler->handle($request);
-            return;
-        }
-        
+    {   
         // Check if user is authenticated
         $adminUserId = $request->session('admin_user_id');
 

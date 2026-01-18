@@ -1,19 +1,22 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Http\Handler\Admin;
 
-use App\Controller\AdminController;
+
+use App\Http\Handler\Admin\AdminHandler;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 use Juzdy\Model\CollectionInterface;
 
-class Blog extends AdminController
+class Blog extends AdminHandler
 {
-    public function handle(): void
+    public function handle(RequestInterface $request): ResponseInterface
     {
         $collection = $this->getPosts();
         
         // Handle pagination
-        $page = max(1, (int)$this->request('page') ?? 1);
-        $pageSize = (int)$this->request('pageSize') ?? 6;
+        $page = max(1, (int)$request('page') ?? 1);
+        $pageSize = (int)$request('pageSize') ?? 6;
         
         if ($pageSize < 1) {
             $pageSize = 6;
@@ -22,8 +25,9 @@ class Blog extends AdminController
         $collection->setPageSize($pageSize);
         $collection->setPage($page);
 
-        $this->render(
-            'admin/blog',
+        return $this->layout(
+            'skibidi/admin',
+            'blog',
             [
                 'posts' => $collection,
                 'currentPage' => $collection->getPage(),

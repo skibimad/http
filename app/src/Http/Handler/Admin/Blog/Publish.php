@@ -1,34 +1,45 @@
 <?php
 
-namespace App\Controller\Admin\Blog;
+namespace App\Http\Handler\Admin\Blog;
 
-use App\Controller\AdminController;
-use Juzdy\Model\CollectionInterface;
+use App\Http\Handler\Admin\AdminHandler;
 use App\Model\BlogPost;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 
-class Publish extends AdminController
+class Publish extends AdminHandler
 {
-    public function handle(): void
+    public function handle(RequestInterface $request): ResponseInterface
     {
         //try {
-            $this->publishPost();
+            $this->publishPost($request('id'));
 
         //} catch (\Throwable) {
-            $this->redirectReferer();
+            return $this->redirect('/admin/blog');
         //}
 
 
     }
 
-    protected function publishPost()
+    /**
+     * Publish the blog post based on request data
+     *
+     * @param int $postId
+     */
+    protected function publishPost(int $postId)
     {
-        $postId = $this->getRequest()->query('id');
         $post = new BlogPost();
         $post->load($postId);
         $post->publish();
 
     }
 
+    /**
+     * Validate the blog post data
+     *
+     * @param array $data
+     * @return bool
+     */
     protected function assertValid(array $data)
     {
         return true;

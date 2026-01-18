@@ -1,24 +1,34 @@
 <?php
 
-namespace App\Controller\Admin\Blog;
+namespace App\Http\Handler\Admin\Blog;
 
-use App\Controller\AdminController;
-use Juzdy\Model\CollectionInterface;
+use App\Http\Handler\Admin\AdminHandler;
 use App\Model\BlogPost;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 
-class Add extends AdminController
+class Add extends AdminHandler
 {
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
-        $this->render(
-            'admin/blog/post',
+        return $this->layout(
+            'skibidi/admin',
+            'blog/post',
             [
                 'post' => $this->getPost()
             ]
         );
     }
     
-    protected function getPost()
+    /**
+     * Retrieve a new blog post instance
+     *
+     * @return BlogPost
+     */
+    protected function getPost(): BlogPost
     {
         return new BlogPost();
     }

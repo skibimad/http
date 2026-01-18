@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Http\Handler\Admin;
 
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use Juzdy\Helper\Auth;
 
 class Login extends AdminController

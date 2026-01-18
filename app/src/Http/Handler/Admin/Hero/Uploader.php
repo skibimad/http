@@ -1,14 +1,14 @@
 <?php
-namespace App\Controller\Admin\Hero;
+namespace App\Http\Handler\Admin\Hero;
 
-use Juzdy\Request;
+use Juzdy\Http\RequestInterface;
 
 class Uploader
 {
     
 
     public function __construct(
-        private Request $request
+        private RequestInterface $request
     )
     {}
 

@@ -16,7 +16,8 @@ return [
     'path' => [
         'pub' => '@{root}/pub',
         'var' => '@{root}/var',
-        'logs' => '@{path.var}/logs',    
+        'logs' => '@{path.var}/logs',
+        'uploads' => '@{path.pub}/uploads',
     ],
     
 ];

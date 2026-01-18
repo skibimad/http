@@ -22,7 +22,6 @@
         </div>
         
         <div class="card-actions">
-            <a x-tooltip="Open on Page" target="_blank" href="/blog/#<?=$post->getAnchor()?>" class="btn-small btn-edit x-tooltip"><i class="fas fa-external-link-alt"></i></a>
             <a x-tooltip="Edit" href="/admin/blog/update?id=<?= $post->getId() ?>" class="btn-small btn-edit x-tooltip"><i class="fas fa-edit"></i></a>
             <a x-tooltip="<?= $post->isPublished() ? 'Unpublish' : 'Publish' ?>"
                 href="/admin/blog/publish?id=<?= $post->getId() ?>" class="btn-small <?= $post->isPublished() ? 'btn-warning x-tooltip' : 'btn-edit x-tooltip' ?>">
@@ -38,4 +37,5 @@
 </div>
 
 <!-- Pagination Controls (bottom) -->
+
 <?php include __DIR__ . '/components/pagination.phtml'; ?>

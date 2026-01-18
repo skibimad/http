@@ -1,46 +1,64 @@
 <?php
 
-namespace App\Controller\Admin\Episode;
+namespace App\Http\Handler\Admin\Episode;
 
-use App\Controller\AdminController;
-use Juzdy\Model\CollectionInterface;
+
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
+use App\Http\Handler\Admin\AdminHandler;
 use App\Model\Episode;
 
-class Update extends AdminController
+class Update extends AdminHandler
 {
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
         //try {
-        if ($this->getRequest()->isPost()) {
-            $this->updateEpisode();
+        if ($request->isPost()) {
+            $this->updateEpisode($request);
             $this->redirect('/admin/episodes');
         }
 
-        $this->render(
-            'admin/episode/form',
+        return $this->layout(
+            'skibidi/admin',
+            'episode/form',
             [
-                'episode' => $this->findEpisode()
+                'episode' => $this->findEpisode($request)
             ]
         );
     }
 
-    protected function findEpisode()
+    /**
+     * Find the episode based on request data
+     *
+     * @param RequestInterface $request
+     * @return Episode
+     */
+    protected function findEpisode(RequestInterface $request): Episode
     {
-        $post = new Episode();
-        $post->load($this->getRequest('id'));
+        $postData = $request('episode');
+        $episode = new Episode();
+        $episode->load($request('id') ?? $postData['id'] ?? null);
 
-        return $post;
+        return $episode;
     }
 
-    protected function updateEpisode()
+    /**
+     * Update the episode based on request data
+     *
+     * @param RequestInterface $request
+     */
+    protected function updateEpisode(RequestInterface $request): void
     {
-        $postData = $this->getRequest('episode');
-        $id = $this->getRequest('id');
+        $postData = $request('episode');
+        //$id = $request('id');
         $this->assertValid($postData);
-        $post = new Episode();
-        $post->load($postData['id']);
+        $episode = new Episode();
+        $episode->load($postData['id']);
         unset($postData['id']);
-        $post->setData(
+        $episode    ->setData(
             array_merge(
                 $postData,
                 []
@@ -50,6 +68,12 @@ class Update extends AdminController
 
     }
 
+    /**
+     * Validate the episode data
+     *
+     * @param array $data
+     * @return bool
+     */
     protected function assertValid(array &$data)
     {
         return true;

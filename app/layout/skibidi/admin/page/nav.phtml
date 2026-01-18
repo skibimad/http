@@ -1,0 +1,56 @@
+<aside class="admin-sidebar">
+    <!-- Admin Sidebar -->
+    <div class="admin-logo">
+        <span class="logo-main">SKIBIDI</span>
+        <span class="logo-sub">ADMIN</span>
+    </div>
+
+    <nav class="sidebar-nav">
+        <ul class="sidebar-menu">
+            <li><a href="/admin"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+            <li><a href="/admin/youtube"><i class="fab fa-youtube"></i> <span>YouTube</span></a></li>
+            <li><a href="/admin/blog"><i class="fas fa-newspaper"></i> <span>Blog</span></a></li>
+            <li><a href="/admin/episodes"><i class="fas fa-film"></i> <span>Episodes</span></a></li>
+            <li><a href="/admin/heroes"><i class="fas fa-user-secret"></i> <span>Heroes</span></a></li>
+            
+            <li><a href="/admin/landing"><i class="fas fa-home"></i> <span>Landing Page</span></a></li>
+            <li><a href="/admin/social"><i class="fas fa-share-alt"></i> <span>Social Links</span></a></li>
+            <li><a href="/"><i class="fas fa-external-link-alt"></i> <span>View Site</span></a></li>
+            <li><a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+        </ul>
+    </nav>
+</aside>
+
+<!-- Mobile Menu Toggle Button -->
+<button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+    <i class="fas fa-bars"></i>
+</button>
+
+<script>
+function toggleMobileMenu() {
+    const sidebar = document.querySelector('.admin-sidebar');
+    sidebar.classList.toggle('open');
+    
+    // Close sidebar when clicking outside on mobile
+    if (sidebar.classList.contains('open')) {
+        document.addEventListener('click', function closeSidebar(e) {
+            if (!sidebar.contains(e.target) && !e.target.classList.contains('mobile-menu-toggle')) {
+                sidebar.classList.remove('open');
+                document.removeEventListener('click', closeSidebar);
+            }
+        });
+    }
+}
+
+// Add active class to current page
+document.addEventListener('DOMContentLoaded', function() {
+    const currentPath = window.location.pathname;
+    const menuLinks = document.querySelectorAll('.sidebar-menu a');
+    
+    menuLinks.forEach(link => {
+        if (currentPath.startsWith(link.getAttribute('href')) && link.getAttribute('href') !== '/') {
+            link.classList.add('active');
+        }
+    });
+});
+</script>

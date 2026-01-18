@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Http\Handler\Admin;
 
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use Juzdy\Model\CollectionInterface;
 use App\Model\SocialLink;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 
-class Social extends AdminController
+class Social extends AdminHandler
 {
-    public function handle(): void
+    public function handle(RequestInterface $request): ResponseInterface
     {
         $collection = $this->getSocialLinks();
         
         // Handle pagination
-        $page = max(1, (int)$this->getRequest('page', 1));
-        $pageSize = (int)$this->getRequest('pageSize', 10);
+        $page = max(1, (int)$request('page', 1));
+        $pageSize = (int)$request('pageSize', 10);
         
         if ($pageSize < 1) {
             $pageSize = 10;
@@ -23,8 +25,9 @@ class Social extends AdminController
         $collection->setPageSize($pageSize);
         $collection->setPage($page);
 
-        $this->render(
-            'admin/social',
+        return $this->layout(
+            'skibidi/admin',
+            'social',
             [
                 'socialLinks' => $collection,
                 'currentPage' => $collection->getPage(),

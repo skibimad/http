@@ -1,55 +1,75 @@
 <?php
+namespace App\Http\Handler\Admin\Blog;
 
-namespace App\Controller\Admin\Blog;
-
-use App\Controller\AdminController;
 use Juzdy\Config;
-use Juzdy\Model\CollectionInterface;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
+
+use App\Http\Handler\Admin\AdminHandler;
 use App\Model\BlogPost;
 
-class Put extends AdminController
+class Put extends AdminHandler
 {
-    //const UPLOAD_DIR = 'public/media/uploads/blog/';
 
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
         //try {
-            $this->putPost();
+            $this->putPost($request);
 
         //} catch (\Throwable) {
-            $this->redirect('/admin/blog');
+            return $this->redirect('/admin/blog');
         //}
         
 
     }
 
-    protected function putPost()
+    /**
+     * Create a new blog post based on request data
+     *
+     * @param RequestInterface $request
+     */
+    protected function putPost(RequestInterface $request)
     {
-        $postData = $this->getRequest()->post('post');
+        $postData = $request->post('post');
         $this->assertValid($postData);
         $post = new BlogPost();
         $post
             ->create($postData);
 
-        $post->set('image', $this->uploadImage($post))
+        $post->set('image', $this->uploadImage($post, $request))
             ->save();
 
     }
 
+    /**
+     * Validate the blog post data
+     *
+     * @param array $data
+     * @return bool
+     */
     protected function assertValid(array &$data)
     {
         unset($data['id']);
         return true;
     }
 
-    protected function uploadImage(BlogPost $post): string
+    /**
+     * Handle image upload for the blog post
+     *
+     * @param BlogPost $post
+     * @param RequestInterface $request
+     * @return string
+     */
+    protected function uploadImage(BlogPost $post, RequestInterface $request): string
     {
-        $uploader = new Uploader($this->getRequest());
-        $uploadPath = Config::get('upload_dir') . 'blog/posts/'.$post->getId().'/';
+        $uploader = new Uploader($request);
+        $uploadPath = Config::get('path.uploads') . '/blog/posts/'.$post->getId().'/';
 
-        $fullPath = Config::get('root') . 'public' . $uploadPath;
 
-        $uploads = $uploader->upload('post_image', $fullPath);
+        $uploads = $uploader->upload('post_image', $uploadPath);
 
         if (!isset($uploads[0]) || !$uploads[0]) {
             return '';

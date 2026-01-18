@@ -1,26 +1,37 @@
 <?php
 
-namespace App\Controller\Admin\Social;
+namespace App\Http\Handler\Admin\Social;
 
-use App\Controller\AdminController;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
+use App\Http\Handler\Admin\AdminHandler;
 use App\Model\SocialLink;
 
-class Put extends AdminController
+class Put extends AdminHandler
 {
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
-        if ($this->getRequest()->isPost()) {
-            $this->createSocialLink();
-            $this->redirect('/admin/social');
+        if ($request->isPost()) {
+            $this->createSocialLink($request);
+            return $this->redirect('/admin/social');
         }
 
         // Redirect if accessed via GET
-        $this->redirect('/admin/social/add');
+        return $this->redirect('/admin/social/add');
     }
 
-    protected function createSocialLink(): void
+    /**
+     * Create a new social link from request data
+     *
+     * @param RequestInterface $request
+     * @return void
+     */
+    protected function createSocialLink(RequestInterface $request): void
     {
-        $data = $this->getRequest()->post('social');
+        $data = $request->post('social');
         
         if (!is_array($data)) {
             return;

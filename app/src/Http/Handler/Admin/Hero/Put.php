@@ -1,51 +1,67 @@
 <?php
 
-namespace App\Controller\Admin\Hero;
+namespace App\Http\Handler\Admin\Hero;
 
-use App\Controller\AdminController;
+use App\Http\Handler\Admin\AdminHandler;
 use Juzdy\Config;
 use App\Model\Hero;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 
-class Put extends AdminController
+class Put extends AdminHandler
 {
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
-        if ($this->getRequest()->isPost()) {
-            $this->createHero();
+        if ($request->isPost()) {
+            $this->createHero($request);
         }
 
-        $this->redirect('/admin/heroes');
+        return $this->redirect('/admin/heroes');
     }
 
-    protected function createHero()
+    /**
+     * Create a new hero based on request data
+     * @param RequestInterface $request
+     * @return void
+     */
+    protected function createHero(RequestInterface $request): void
     {
-        $heroData = $this->getRequest()->post('hero');
+        $heroData = $request->post('hero');
         $this->assertValid($heroData);
         unset($heroData['id']);
         $hero = new Hero();
         $hero->create($heroData);
 
         // Upload image if provided
-        $imagePath = $this->uploadFile($hero, 'hero_image');
+        $imagePath = $this->uploadFile($hero, 'hero_image', $request);
         if ($imagePath) {
             $hero->set('image', $imagePath)->save();
         }
 
         // Upload video if provided
-        $videoPath = $this->uploadFile($hero, 'hero_video');
+        $videoPath = $this->uploadFile($hero, 'hero_video', $request);
         if ($videoPath) {
             $hero->set('video', $videoPath)->save();
         }
     }
 
-    protected function assertValid(array &$data)
+    /**
+     * Validate the hero data
+     *
+     * @param array $data
+     * @return bool
+     */
+    protected function assertValid(array &$data): bool
     {
         return true;
     }
 
-    protected function uploadFile(Hero $hero, string $fieldName): string
+    protected function uploadFile(Hero $hero, string $fieldName, RequestInterface $request): string
     {
-        $uploader = new Uploader($this->getRequest());
+        $uploader = new Uploader($request);
         $uploadPath = Config::get('upload_dir') . 'hero/' . $hero->getId() . '/';
 
         $fullPath = Config::get('root') . 'public' . $uploadPath;

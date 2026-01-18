@@ -1,20 +1,25 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Http\Handler\Admin;
 
-use App\Controller\AdminController;
+
 use Juzdy\Model\CollectionInterface;
 use App\Model\Hero;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 
-class Heroes extends AdminController
+class Heroes extends AdminHandler
 {
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
         $collection = $this->getHeroes();
         
         // Handle pagination
-        $page = max(1, (int)$this->getRequest('page', 1));
-        $pageSize = (int)$this->getRequest('pageSize', 6);
+        $page = max(1, (int)$request('page') ?? 1);
+        $pageSize = (int)$request('pageSize') ?? 6;
         
         if ($pageSize < 1) {
             $pageSize = 6;
@@ -23,8 +28,9 @@ class Heroes extends AdminController
         $collection->setPageSize($pageSize);
         $collection->setPage($page);
 
-        $this->render(
-            'admin/heroes',
+        return $this->layout(
+            'skibidi/admin',
+            'heroes',
             [
                 'heroes' => $collection,
                 'currentPage' => $collection->getPage(),
@@ -35,6 +41,11 @@ class Heroes extends AdminController
         );
     }
 
+    /**
+     * Retrieve heroes collection
+     *
+     * @return CollectionInterface
+     */
     protected function getHeroes()
     {
         $heroCollection = (new Hero())

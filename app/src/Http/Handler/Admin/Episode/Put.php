@@ -1,50 +1,64 @@
 <?php
 
-namespace App\Controller\Admin\Episode;
+namespace App\Http\Handler\Admin\Episode;
 
-use App\Controller\Admin\Episode\Uploader;
-use App\Controller\AdminController;
 use Juzdy\Config;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 use App\Model\Episode;
+use App\Http\Handler\Admin\Episode\Uploader;
+use App\Http\Handler\Admin\AdminHandler;
 
-class Put extends AdminController
+class Put extends AdminHandler
 {
-    //const UPLOAD_DIR = 'public/media/uploads/episode/';
+    
 
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
         //try {
-            $this->putEpisode();
+            $this->putEpisode($request);
 
         //} catch (\Throwable) {
-            $this->redirect('/admin/episodes');
+            return $this->redirect('/admin/episodes');
         //}
-        
-
     }
 
-    protected function putEpisode()
+    /**
+     * Create a new episode based on request data
+     *
+     * @param RequestInterface $request
+     */
+    protected function putEpisode(RequestInterface $request): void
     {
-        $episodeData = $this->getRequest()->post('episode');
+        $episodeData = $request->post('episode');
         $this->assertValid($episodeData);
         $episode = new Episode();
         $episode
             ->create($episodeData);
 
-        $episode->set('thumbnail', $this->uploadImage($episode))
+        $episode->set('thumbnail', $this->uploadImage($episode, $request))
             ->save();
 
     }
 
+    /**
+     * Validate the episode data
+     *
+     * @param array $data
+     * @return bool
+     */
     protected function assertValid(array &$data)
     {
         unset($data['id']);
         return true;
     }
 
-    protected function uploadImage(Episode$episode): string
+    protected function uploadImage(Episode$episode, RequestInterface $request): string
     {
-        $uploader = new Uploader($this->getRequest());
+        $uploader = new Uploader($request);
         $uploadPath = Config::get('upload_dir') . 'episode/'.$episode->getId().'/';
 
         $fullPath = Config::get('root') . 'public' . $uploadPath;

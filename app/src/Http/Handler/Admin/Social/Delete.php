@@ -1,21 +1,26 @@
 <?php
 
-namespace App\Controller\Admin\Social;
+namespace App\Http\Handler\Admin\Social;
 
-use App\Controller\AdminController;
+use App\Http\Handler\Admin\AdminHandler;
 use App\Model\SocialLink;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 
-class Delete extends AdminController
+class Delete extends AdminHandler
 {
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
-        $id = $this->getRequest('id');
+        $id = $request->query('id');
         
         if ($id) {
             $socialLink = new SocialLink();
             $socialLink->delete((int)$id);
         }
         
-        $this->redirect('/admin/social');
+        return $this->redirect('/admin/social');
     }
 }

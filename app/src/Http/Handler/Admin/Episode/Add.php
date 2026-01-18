@@ -1,24 +1,34 @@
 <?php
 
-namespace App\Controller\Admin\Episode;
+namespace App\Http\Handler\Admin\Episode;
 
-use App\Controller\AdminController;
-use Juzdy\Model\CollectionInterface;
-use App\Model\BlogPost;
+
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
+use App\Http\Handler\Admin\AdminHandler;
 use App\Model\Episode;
 
-class Add extends AdminController
+class Add extends AdminHandler
 {
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
-        $this->render(
-            'admin/episode/form',
+        return $this->layout(
+            'skibidi/admin',
+            'episode/form',
             [
                 'episode' => $this->getEpisode()
             ]
         );
     }
 
+    /**
+     * Retrieve a new episode instance
+     *
+     * @return Episode
+     */
     protected function getEpisode(): Episode
     {
         return new Episode();

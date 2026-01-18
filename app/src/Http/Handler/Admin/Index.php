@@ -1,24 +1,29 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Http\Handler\Admin;
 
-use App\Controller\AdminController;
+
 use App\Model\BlogPost;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 
-class Index extends AdminController
+class Index extends AdminHandler
 {
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
         $blogs = (new BlogPost())->getCollection();
 
-        $this->render(
-            'admin/dashboard',
+        return $this->layout(
+            'skibidi/admin',
+            'dashboard',
             [
                 'blogCount' => $blogs->count(),
                 'heroCount' => $this->getHeroCount(),
                 'episodeCount' => $this->getEpisodeCount(),
-                'youtubeStats' => $this->getYoutubeStats(),
-            ]
+            ],
         );
     }
 
@@ -32,15 +37,5 @@ class Index extends AdminController
     {
         $episodes = (new \App\Model\Episode())->getCollection();
         return $episodes->count();
-    }
-
-    protected function getYoutubeStats(): array
-    {
-        return [
-            'day' => 100,
-            'week' => 500,
-            'month' => 2000,
-            'year' => 24000,
-        ];
     }
 }

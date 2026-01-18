@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Admin\Hero;
+namespace App\Http\Handler\Admin\Hero;
 
-use App\Controller\AdminController;
+use App\Http\Handler\AdminController;
 use Juzdy\Config;
 use App\Model\Hero;
 

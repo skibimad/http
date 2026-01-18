@@ -1,27 +1,31 @@
 <?php
 
-namespace App\Controller\Admin\Landing;
+namespace App\Http\Handler\Admin\Landing;
 
-use App\Controller\AdminController;
+use App\Http\Handler\Admin\AdminHandler;
 use Juzdy\Config;
 use App\Model\LandingPageContent;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 
-class Update extends AdminController
+class Update extends AdminHandler
 {
-    public function handle(): void
+    public function handle(RequestInterface $request): ResponseInterface
     {
-        if ($this->getRequest()->isPost()) {
-            $this->updateContent();
-            $this->redirect('/admin/landing');
+        if ($request->isPost()) {
+            $this->updateContent($request);
         }
 
         // Redirect to landing page if accessed via GET
-        $this->redirect('/admin/landing');
+        return $this->redirect('/admin/landing');
     }
 
-    protected function updateContent(): void
+    /**
+     * Update landing page content based on request data
+     */
+    protected function updateContent(RequestInterface $request): void
     {
-        $landingData = $this->getRequest()->post('landing');
+        $landingData = $request->post('landing');
         
         if (!is_array($landingData)) {
             return;
@@ -43,7 +47,7 @@ class Update extends AdminController
                 
                 // Handle image uploads
                 if ($fieldType === LandingPageContent::FIELD_TYPE_IMAGE) {
-                    $uploadedImage = $this->handleImageUpload($section, $fieldKey);
+                    $uploadedImage = $this->handleImageUpload($section, $fieldKey, $request);
                     if ($uploadedImage) {
                         $value = $uploadedImage;
                     }
@@ -54,10 +58,18 @@ class Update extends AdminController
         }
     }
     
-    protected function handleImageUpload(string $section, string $fieldKey): ?string
+    /**
+     * Handle image upload for landing page sections
+     *
+     * @param string $section
+     * @param string $fieldKey
+     * @param RequestInterface $request
+     * @return string|null
+     */
+    protected function handleImageUpload(string $section, string $fieldKey, RequestInterface $request): ?string
     {
         $fileKey = "landing_image_{$section}_{$fieldKey}";
-        $files = $this->getRequest()->files($fileKey);
+        $files = $request->files($fileKey);
         
         if (empty($files) || empty($files[0]['tmp_name'])) {
             return null;

@@ -1,22 +1,39 @@
 <?php
-namespace App\Controller\Admin\Episode;
+namespace App\Http\Handler\Admin\Episode;
 
-use Juzdy\Request;
+use Juzdy\Http\RequestInterface;
 
 class Uploader
 {
     
 
+    /**
+     * Constructor
+     *
+     * @param RequestInterface $request
+     */
     public function __construct(
-        private Request $request
+        private RequestInterface $request
     )
     {}
 
+    /**
+     * Get the current request
+     *
+     * @return RequestInterface
+     */
     protected function getRequest()
     {
         return $this->request;
     }
 
+    /**
+     * Upload multiple files
+     *
+     * @param string $key
+     * @param string $to
+     * @return array
+     */
     public function upload(string $key, string $to): array
     {
         $uploaded = [];
@@ -29,6 +46,13 @@ class Uploader
         
     }
 
+    /**
+     * Upload a single file
+     *
+     * @param array $fileData
+     * @param string $to
+     * @return string|false
+     */
     public function uploadFile(array $fileData, string $to): string|false
     {
         $tmp_name = $fileData['tmp_name'];

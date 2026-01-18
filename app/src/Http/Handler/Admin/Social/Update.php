@@ -1,38 +1,54 @@
 <?php
 
-namespace App\Controller\Admin\Social;
+namespace App\Http\Handler\Admin\Social;
 
-use App\Controller\AdminController;
+use App\Http\Handler\Admin\AdminHandler;
+
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 use App\Model\SocialLink;
 
-class Update extends AdminController
+class Update extends AdminHandler
 {
-    public function handle(): void
+    public function handle(RequestInterface $request): ResponseInterface
     {
-        if ($this->getRequest()->isPost()) {
-            $this->updateSocialLink();
-            $this->redirect('/admin/social');
+        if ($request->isPost()) {
+            $this->updateSocialLink($request);
+            return $this->redirect('/admin/social');
         }
 
-        $this->render(
-            'admin/social/form',
+        return $this->layout(
+            'skibidi/admin/',
+            'social/form',
             [
-                'socialLink' => $this->findSocialLink()
+                'socialLink' => $this->findSocialLink($request)
             ]
         );
     }
 
-    protected function findSocialLink(): SocialLink
+    /**
+     * Find a social link by ID from the request
+     *
+     * @param RequestInterface $request
+     * @return SocialLink
+     */
+    protected function findSocialLink(RequestInterface $request): SocialLink
     {
         $socialLink = new SocialLink();
-        $socialLink->load($this->getRequest('id'));
+        $socialLink->load($request->query('id'));
 
         return $socialLink;
     }
 
-    protected function updateSocialLink(): void
+    /**
+     * Update an existing social link from request data
+     *
+     * @param RequestInterface $request
+     * @return void
+     */
+    protected function updateSocialLink(RequestInterface $request): void
     {
-        $data = $this->getRequest()->post('social');
+        $data = $request->post('social');
         
         if (!is_array($data)) {
             return;

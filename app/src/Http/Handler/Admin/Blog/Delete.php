@@ -1,37 +1,33 @@
 <?php
 
-namespace App\Controller\Admin\Blog;
+namespace App\Http\Handler\Admin\Blog;
 
-use App\Controller\AdminController;
-use Juzdy\Model\CollectionInterface;
+use App\Http\Handler\Admin\AdminHandler;
 use App\Model\BlogPost;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 
-class Delete extends AdminController
+class Delete extends AdminHandler
 {
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
-        //try {
-            $this->deletePost();
-
-        //} catch (\Throwable) {
-            $this->redirect('/admin/blog');
-        //}
-
-
+            $this->deletePost($request);
+            return $this->redirect('/admin/blog');
     }
 
-    protected function deletePost()
+    /**
+     * Delete the blog post based on request data
+     *
+     * @param RequestInterface $request
+     */
+    protected function deletePost(RequestInterface $request)
     {
-        $postId = $this->getRequest()->query('id');
+        $postId = $request('id');
         $post = new BlogPost();
         $post->delete($postId);
 
     }
-
-    protected function assertValid(array $data)
-    {
-        return true;
-    }
-
-    
 }

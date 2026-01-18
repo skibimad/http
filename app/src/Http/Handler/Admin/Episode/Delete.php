@@ -1,37 +1,51 @@
 <?php
 
-namespace App\Controller\Admin\Episode;
+namespace App\Http\Handler\Admin\Episode;
 
-use App\Controller\AdminController;
-use Juzdy\Model\CollectionInterface;
-use App\Model\BlogPost;
+use App\Http\Handler\AdminController;
+use App\Http\Handler\Admin\AdminHandler;
 use App\Model\Episode;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 
-class Delete extends AdminController
+class Delete extends AdminHandler
 {
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
-        if ($this->getRequest()->isGet()) {
-            $this->deleteEpisode();
+        if ($request->isGet()) {
+            $this->deleteEpisode($request);
         }
-        $this->redirectReferer();
+
+        return $this->redirectReferer($request);
     }
 
+    /**
+     * Retrieve a new episode instance
+     *
+     * @return Episode
+     */
     protected function getEpisode(): Episode
     {
         return new Episode();
     }
 
-    protected function deleteEpisode()
+    /**
+     * Delete the episode based on request data
+     *
+     */
+    protected function deleteEpisode(RequestInterface $request): void
     {
         $episode = new Episode();
 
-        $episode->load($this->getRequest('id'));
+        $episode->load($request->query('id'));
         if (!$episode->getId()) {
             throw new \Exception('Episode not found');
         }
         
-        $episode->delete($this->getRequest('id'));
+        $episode->delete($request->query('id'));
     }
     
 }

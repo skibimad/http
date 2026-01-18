@@ -1,24 +1,34 @@
 <?php
 
-namespace App\Controller\Admin\Hero;
+namespace App\Http\Handler\Admin\Hero;
 
-use App\Controller\AdminController;
+
+use App\Http\Handler\Admin\AdminHandler;
 use App\Model\Hero;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 
-class Delete extends AdminController
+class Delete extends AdminHandler
 {
-    public function handle(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(RequestInterface $request): ResponseInterface
     {
-        if ($this->getRequest()->isGet()) {
-            $this->deleteHero();
+        if ($request->isGet()) {
+            $this->deleteHero($request);
         }
-        $this->redirectReferer();
+        return $this->redirectReferer($request);
     }
 
-    protected function deleteHero()
+    /**
+     * Delete the hero based on request data
+     *
+     */
+    protected function deleteHero(RequestInterface $request): void
     {
         $hero = new Hero();
-        $hero->load($this->getRequest('id'));
+        $hero->load($request->query('id'));
         
         if (!$hero->getId()) {
             throw new \Exception('Hero not found');
