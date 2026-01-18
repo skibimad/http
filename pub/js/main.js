@@ -308,7 +308,7 @@ function playVideoBackward(video) {
                 video.dataset.isReversing = 'false';
                 // Start playing forward again
                 video.play().catch(err => {
-                    console.log('Video play prevented:', err);
+                    console.log('Ping-pong video autoplay prevented:', err);
                 });
                 return;
             }
