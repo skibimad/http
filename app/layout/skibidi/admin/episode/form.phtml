@@ -26,7 +26,7 @@ $episode = $this('episode')
                     <img height="100px" src="/<?= htmlspecialchars(trim($this('episode')['image'], '/')) ?>" alt="<?= htmlspecialchars($episode['title']) ?>" class="card-image">
                  <?php endif;?>
                 <div class="file-upload-wrapper">
-                    <input type="file" id="episode-image" name="thumbnail" accept="image/*" class="file-input">
+                    <input type="file" id="episode-image" name="thumbnail[]" accept="image/*" class="file-input">
                     <div class="file-upload-area">
                         <div class="upload-icon">📁</div>
                         <p class="upload-text">Click to upload or drag and drop</p>

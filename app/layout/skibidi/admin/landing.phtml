@@ -39,7 +39,7 @@ $sectionsConfig = $this('sectionsConfig');
                                 </div>
                             <?php endif; ?>
                             <div class="file-upload-wrapper">
-                                <input type="file" id="<?= $fieldId ?>" name="landing_image_<?= $sectionKey ?>_<?= $fieldKey ?>" accept="image/*" class="file-input">
+                                <input type="file" id="<?= $fieldId ?>" name="landing_image_<?= $sectionKey ?>_<?= $fieldKey ?>[]" accept="image/*" class="file-input">
                                 <input type="hidden" name="<?= $fieldName ?>" value="<?= htmlspecialchars($currentValue) ?>">
                                 <div class="file-upload-area">
                                     <div class="upload-icon">📁</div>
