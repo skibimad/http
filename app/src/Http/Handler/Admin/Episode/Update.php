@@ -3,10 +3,12 @@
 namespace App\Http\Handler\Admin\Episode;
 
 
+use Juzdy\Config;
 use Juzdy\Http\RequestInterface;
 use Juzdy\Http\ResponseInterface;
 use App\Http\Handler\Admin\AdminHandler;
 use App\Model\Episode;
+use App\Http\Handler\Admin\Episode\Uploader;
 
 class Update extends AdminHandler
 {
@@ -66,6 +68,11 @@ class Update extends AdminHandler
         )
         ->save();
 
+        // Upload thumbnail if provided
+        $thumbnailPath = $this->uploadImage($episode, $request);
+        if ($thumbnailPath) {
+            $episode->set('thumbnail', $thumbnailPath)->save();
+        }
     }
 
     /**
@@ -79,5 +86,24 @@ class Update extends AdminHandler
         return true;
     }
 
-    
+    /**
+     * Handle image upload for the episode
+     *
+     * @param Episode $episode
+     * @param RequestInterface $request
+     * @return string
+     */
+    protected function uploadImage(Episode $episode, RequestInterface $request): string
+    {
+        $uploader = new Uploader($request);
+        $uploadPath = Config::get('path.uploads') . '/episode/' . $episode->getId() . '/';
+
+        $uploads = $uploader->upload('thumbnail', $uploadPath);
+
+        if (!isset($uploads[0]) || !$uploads[0]) {
+            return '';
+        }
+
+        return '/uploads/episode/' . $episode->getId() . '/' . $uploads[0];
+    }
 }

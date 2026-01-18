@@ -62,16 +62,14 @@ class Put extends AdminHandler
     protected function uploadFile(Hero $hero, string $fieldName, RequestInterface $request): string
     {
         $uploader = new Uploader($request);
-        $uploadPath = Config::get('upload_dir') . 'hero/' . $hero->getId() . '/';
+        $uploadPath = Config::get('path.uploads') . '/hero/' . $hero->getId() . '/';
 
-        $fullPath = Config::get('root') . 'public' . $uploadPath;
-
-        $uploads = $uploader->upload($fieldName, $fullPath);
+        $uploads = $uploader->upload($fieldName, $uploadPath);
 
         if (!isset($uploads[0]) || !$uploads[0]) {
             return '';
         }
 
-        return $uploadPath . $uploads[0];
+        return '/uploads/hero/' . $hero->getId() . '/' . $uploads[0];
     }
 }
