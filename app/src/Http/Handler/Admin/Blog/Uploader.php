@@ -55,7 +55,7 @@ class Uploader
             }
             
             // Skip if no file was uploaded or if there's an upload error
-            if (empty($file['tmp_name']) || !empty($file['error']) || $file['error'] !== 0) {
+            if (empty($file['tmp_name']) || !isset($file['error']) || $file['error'] !== UPLOAD_ERR_OK) {
                 continue;
             }
             
@@ -95,7 +95,8 @@ class Uploader
 
         // Create directory if it doesn't exist
         if (!is_dir($to)) {
-            if (!mkdir($to, 0755, true) && !is_dir($to)) {
+            @mkdir($to, 0755, true);
+            if (!is_dir($to)) {
                 return false;
             }
         }
