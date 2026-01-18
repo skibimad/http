@@ -297,12 +297,13 @@ function playVideoBackward(video) {
         const elapsed = currentTime - lastFrameTime;
         
         if (elapsed >= frameTime) {
-            // Move backward by a small time increment
+            // Move backward by elapsed time to maintain consistent playback speed
+            // This ensures backward speed matches forward speed regardless of device performance
             video.currentTime = Math.max(0, video.currentTime - (elapsed / 1000));
             lastFrameTime = currentTime;
             
             // Check if we've reached the beginning
-            if (video.currentTime <= VIDEO_END_THRESHOLD) {
+            if (video.currentTime <= VIDEO_START_THRESHOLD) {
                 video.dataset.direction = '1';
                 video.dataset.isReversing = 'false';
                 // Start playing forward again
