@@ -2,6 +2,9 @@
 
 // Constants
 const MOBILE_BREAKPOINT = 768;
+const VIDEO_PLAYBACK_FPS = 30; // Frames per second for backward video playback
+const VIDEO_START_THRESHOLD = 0.01; // Threshold in seconds to detect video at start
+const VIDEO_END_THRESHOLD = 0.05; // Threshold in seconds to detect video at end
 
 // Throttle utility function for scroll performance
 function throttle(func, limit) {
@@ -273,8 +276,8 @@ function initPingPongVideos() {
         });
         
         video.addEventListener('play', function() {
-            // Reset to forward when video starts playing
-            if (this.currentTime === 0 && this.dataset.isReversing === 'false') {
+            // Reset to forward when video starts playing from the beginning
+            if (this.currentTime < VIDEO_START_THRESHOLD && this.dataset.isReversing === 'false') {
                 this.dataset.direction = '1';
             }
         });
@@ -283,8 +286,7 @@ function initPingPongVideos() {
 
 // Helper function to play video backward
 function playVideoBackward(video) {
-    const fps = 30; // frames per second
-    const frameTime = 1000 / fps; // milliseconds per frame
+    const frameTime = 1000 / VIDEO_PLAYBACK_FPS; // milliseconds per frame
     let lastFrameTime = performance.now();
     
     function reverseFrame(currentTime) {
@@ -300,7 +302,7 @@ function playVideoBackward(video) {
             lastFrameTime = currentTime;
             
             // Check if we've reached the beginning
-            if (video.currentTime <= 0.05) {
+            if (video.currentTime <= VIDEO_END_THRESHOLD) {
                 video.dataset.direction = '1';
                 video.dataset.isReversing = 'false';
                 // Start playing forward again
