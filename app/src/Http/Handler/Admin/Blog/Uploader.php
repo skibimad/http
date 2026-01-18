@@ -40,6 +40,11 @@ class Uploader
         $uploaded = [];
 
         foreach ($this->getRequest()->files($key) as $file) {
+            // Skip if no file was uploaded or if there's an upload error
+            if (empty($file['tmp_name']) || !empty($file['error'])) {
+                continue;
+            }
+            
             $uploaded[] = $this->uploadFile($file, $to);
         }
         
