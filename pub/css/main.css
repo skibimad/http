@@ -699,7 +699,7 @@ body {
     letter-spacing: 0.1em;
     margin-bottom: var(--spacing-sm);
     position: relative;
-    filter: drop-shadow(0 0 30px rgba(255, 45, 120, 0.7))
+    filter: drop-shadow(0 0 30px rgba(255, 45, 120, 0.7)) 
             drop-shadow(0 0 60px rgba(0, 245, 212, 0.4));
 }
 

@@ -1,5 +1,8 @@
 // Skibidi Madness - Main JavaScript
 
+// Constants
+const MOBILE_BREAKPOINT = 768;
+
 // Throttle utility function for scroll performance
 function throttle(func, limit) {
     let inThrottle;
@@ -211,7 +214,6 @@ function initScrollAnimations() {
     });
     
     // Enhanced navbar scroll effect
-    let lastScroll = 0;
     const navbar = document.querySelector('.navbar');
     
     window.addEventListener('scroll', throttle(function() {
@@ -224,8 +226,6 @@ function initScrollAnimations() {
             navbar.style.background = 'rgba(13, 13, 18, 0.75)';
             navbar.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.6), 0 0 80px rgba(255, 45, 120, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05)';
         }
-        
-        lastScroll = currentScroll;
     }, 100));
 }
 
@@ -480,7 +480,7 @@ function initParallaxEffect() {
 
 // Add cursor glow effect for cards (desktop only)
 function initCursorGlow() {
-    if (window.innerWidth < 768) return;
+    if (window.innerWidth < MOBILE_BREAKPOINT) return;
     
     const cards = document.querySelectorAll('.hero-card, .video-card, .blog-card');
     
@@ -511,7 +511,7 @@ function initPageLoadAnimation() {
 
 // Add magnetic effect to buttons (desktop only)
 function initMagneticButtons() {
-    if (window.innerWidth < 768) return;
+    if (window.innerWidth < MOBILE_BREAKPOINT) return;
     
     const buttons = document.querySelectorAll('.btn');
     
