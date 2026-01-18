@@ -264,16 +264,19 @@ function initSmoothScroll() {
 function initAnnouncementBanner() {
     const banner = document.querySelector('.version-announcement');
     if (banner) {
+        const HIDE_DELAY_MS = 5000;
+        const ANIMATION_DURATION_MS = 800;
+        
         setTimeout(function() {
-            banner.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            banner.style.transition = `opacity ${ANIMATION_DURATION_MS}ms ease, transform ${ANIMATION_DURATION_MS}ms ease`;
             banner.style.opacity = '0';
             banner.style.transform = 'translateY(-20px)';
             
             // Remove from DOM after animation completes
             setTimeout(function() {
                 banner.remove();
-            }, 800);
-        }, 5000);
+            }, ANIMATION_DURATION_MS);
+        }, HIDE_DELAY_MS);
     }
 }
 
