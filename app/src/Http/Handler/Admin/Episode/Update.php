@@ -106,3 +106,4 @@ class Update extends AdminHandler
 
         return '/uploads/episode/' . $episode->getId() . '/' . $uploads[0];
     }
+}

@@ -108,3 +108,4 @@ class Update extends AdminHandler
 
         return '/uploads/blog/posts/' . $post->getId() . '/' . $uploads[0];
     }
+}
