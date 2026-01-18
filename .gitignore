@@ -1,0 +1,25 @@
+# Vendor dependencies
+/vendor/
+
+# Test files
+test-*.html
+
+# Composer files
+composer.phar
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+/tmp/
