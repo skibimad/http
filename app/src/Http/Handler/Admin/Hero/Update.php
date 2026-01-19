@@ -2,38 +2,42 @@
 
 namespace App\Http\Handler\Admin\Hero;
 
-use App\Http\Handler\AdminController;
+use App\Helper\Uploader;
 use Juzdy\Config;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
+use App\Http\Handler\Admin\AdminHandler;
 use App\Model\Hero;
 
-class Update extends AdminController
+class Update extends AdminHandler
 {
-    public function handle(): void
+    public function handle(RequestInterface $request): ResponseInterface
     {
-        if ($this->getRequest()->isPost()) {
-            $this->updateHero();
-            $this->redirect('/admin/heroes');
+        if ($request->isPost()) {
+            $this->updateHero($request);
+            return $this->redirect('/admin/heroes');
         }
 
-        $this->render(
-            'admin/hero/form',
+        return $this->layout(
+            'skibidi/admin/',
+            'hero/form',
             [
-                'hero' => $this->findHero()
+                'hero' => $this->findHero($request)
             ]
         );
     }
 
-    protected function findHero()
+    protected function findHero(RequestInterface $request): Hero
     {
         $hero = new Hero();
-        $hero->load($this->getRequest('id'));
+        $hero->load($request->query('id'));
 
         return $hero;
     }
 
-    protected function updateHero()
+    protected function updateHero(RequestInterface $request): void
     {
-        $heroData = $this->getRequest()->post('hero');
+        $heroData = $request->post('hero');
         $this->assertValid($heroData);
         $hero = new Hero();
         $hero->load($heroData['id']);
@@ -41,13 +45,13 @@ class Update extends AdminController
         $hero->setData($heroData)->save();
 
         // Upload image if provided
-        $imagePath = $this->uploadFile($hero, 'hero_image');
+        $imagePath = $this->uploadFile($hero, 'hero_image', $request);
         if ($imagePath) {
             $hero->set('image', $imagePath)->save();
         }
 
         // Upload video if provided
-        $videoPath = $this->uploadFile($hero, 'hero_video');
+        $videoPath = $this->uploadFile($hero, 'hero_video', $request);
         if ($videoPath) {
             $hero->set('video', $videoPath)->save();
         }
@@ -58,9 +62,9 @@ class Update extends AdminController
         return true;
     }
 
-    protected function uploadFile(Hero $hero, string $fieldName): string
+    protected function uploadFile(Hero $hero, string $fieldName, RequestInterface $request): string
     {
-        $uploader = new Uploader($this->getRequest());
+        $uploader = new Uploader($request);
         $uploadPath = Config::get('path.uploads') . '/hero/' . $hero->getId() . '/';
 
         $uploads = $uploader->upload($fieldName, $uploadPath);
@@ -69,6 +73,6 @@ class Update extends AdminController
             return '';
         }
 
-        return '/uploads/hero/' . $hero->getId() . '/' . $uploads[0];
+        return '/pub/uploads/hero/' . $hero->getId() . '/' . $uploads[0];
     }
 }

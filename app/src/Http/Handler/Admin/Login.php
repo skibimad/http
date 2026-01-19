@@ -2,34 +2,36 @@
 
 namespace App\Http\Handler\Admin;
 
-use App\Http\Handler\AdminController;
+use App\Helper\Auth as HelperAuth;
 use Juzdy\Helper\Auth;
+use Juzdy\Http\RequestInterface;
+use Juzdy\Http\ResponseInterface;
 
-class Login extends AdminController
+class Login extends AdminHandler
 {
     /**
      * Handle login request
      * 
      * @return void
      */
-    public function handle(): void
+    public function handle(RequestInterface $request): ResponseInterface
     {
         // If user is already logged in, redirect to dashboard
-        if (Auth::isLoggedIn()) {
-            $this->redirect('/admin/index');
-            return;
+        if (HelperAuth::isLoggedIn()) {
+            return $this->redirect('/admin/index');
+            
         }
 
-        if ($this->request()->isPost()) {
-            $this->processLogin();
-            return;
+        if ($request->isPost()) {
+            $this->processLogin($request);
+            
         }
 
         // Show login form
-        $this->render(
-            'admin/login',
-            [],
-            true
+        $this->layout(
+            'skibidi/admin',
+            'standalone/login',
+            []
         );
     }
 
@@ -38,11 +40,11 @@ class Login extends AdminController
      *
      * @return void
      */
-    private function processLogin(): void
+    private function processLogin(RequestInterface $request): ResponseInterface
     {
         $userData = [
-            'email' => $this->request()->post('email'),
-            'password' => $this->request()->post('password'),
+            'email' => $request->post('email'),
+            'password' => $request->post('password'),
         ];
 
         try {
@@ -54,8 +56,7 @@ class Login extends AdminController
             //$this->request()->session('intended_url', null);
             
             //$this->redirectReferer();
-            $this->redirect('/admin/index');
-            return;
+            return $this->redirect('/admin/index');
         } catch (\Throwable $e) {
             die($e->getMessage());
             $this->response()->addError($e->getMessage());

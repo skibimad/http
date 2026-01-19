@@ -96,7 +96,7 @@ class Update extends AdminHandler
         $filePath = $uploadPath . $filename;
         
         if (move_uploaded_file($file['tmp_name'], $filePath)) {
-            return '/uploads/landing/' . $filename;
+            return '/pub/uploads/landing/' . $filename;
         }
         
         return null;

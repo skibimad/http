@@ -2,13 +2,12 @@
 
 namespace App\Http\Handler\Admin\Episode;
 
-
+use App\Helper\Uploader;
 use Juzdy\Config;
 use Juzdy\Http\RequestInterface;
 use Juzdy\Http\ResponseInterface;
 use App\Http\Handler\Admin\AdminHandler;
 use App\Model\Episode;
-use App\Http\Handler\Admin\Episode\Uploader;
 
 class Update extends AdminHandler
 {
@@ -59,20 +58,23 @@ class Update extends AdminHandler
         $this->assertValid($postData);
         $episode = new Episode();
         $episode->load($postData['id']);
+
         unset($postData['id']);
-        $episode    ->setData(
+
+        $episode->setData(
             array_merge(
                 $postData,
                 []
             )
         )
-        ->save();
+        ;
 
-        // Upload thumbnail if provided
         $thumbnailPath = $this->uploadImage($episode, $request);
         if ($thumbnailPath) {
             $episode->set('thumbnail', $thumbnailPath)->save();
         }
+
+        $episode->save();
     }
 
     /**
@@ -104,6 +106,6 @@ class Update extends AdminHandler
             return '';
         }
 
-        return '/uploads/episode/' . $episode->getId() . '/' . $uploads[0];
+        return '/pub/uploads/episode/' . $episode->getId() . '/' . $uploads[0];
     }
 }

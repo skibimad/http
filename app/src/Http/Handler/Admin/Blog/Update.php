@@ -2,12 +2,12 @@
 
 namespace App\Http\Handler\Admin\Blog;
 
+use App\Helper\Uploader;
 use Juzdy\Config;
-use App\Http\Handler\Admin\AdminHandler;
-use App\Model\BlogPost;
 use Juzdy\Http\RequestInterface;
 use Juzdy\Http\ResponseInterface;
-use App\Http\Handler\Admin\Blog\Uploader;
+use App\Http\Handler\Admin\AdminHandler;
+use App\Model\BlogPost;
 
 class Update extends AdminHandler
 {
@@ -106,6 +106,6 @@ class Update extends AdminHandler
             return '';
         }
 
-        return '/uploads/blog/posts/' . $post->getId() . '/' . $uploads[0];
+        return '/pub/uploads/blog/posts/' . $post->getId() . '/' . $uploads[0];
     }
 }

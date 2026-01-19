@@ -1,8 +1,7 @@
 <?php
-namespace App\Http\Handler\Admin\Blog;
+namespace App\Helper;
 
 use Juzdy\Http\RequestInterface;
-use Juzdy\Request;
 
 class Uploader
 {
@@ -58,7 +57,7 @@ class Uploader
     {
         $tmp_name = $fileData['tmp_name'];
         $fileext = pathinfo($fileData['name'], PATHINFO_EXTENSION);
-        $filename = uniqid('blog_', true) . '.' . $fileext;
+        $filename = uniqid('', true) . '.' . $fileext;
         $filePath = $to . $filename;
 
         if (!is_dir($to)) {

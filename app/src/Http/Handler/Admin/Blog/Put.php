@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Handler\Admin\Blog;
 
+use App\Helper\Uploader;
 use Juzdy\Config;
 use Juzdy\Http\RequestInterface;
 use Juzdy\Http\ResponseInterface;
@@ -68,14 +69,13 @@ class Put extends AdminHandler
         $uploader = new Uploader($request);
         $uploadPath = Config::get('path.uploads') . '/blog/posts/'.$post->getId().'/';
 
-
         $uploads = $uploader->upload('post_image', $uploadPath);
 
         if (!isset($uploads[0]) || !$uploads[0]) {
             return '';
         }
 
-        return '/uploads/blog/posts/' . $post->getId() . '/' . $uploads[0];
+        return '/pub/uploads/blog/posts/' . $post->getId() . '/' . $uploads[0];
     }
 
     

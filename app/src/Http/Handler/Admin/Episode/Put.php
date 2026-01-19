@@ -6,8 +6,8 @@ use Juzdy\Config;
 use Juzdy\Http\RequestInterface;
 use Juzdy\Http\ResponseInterface;
 use App\Model\Episode;
-use App\Http\Handler\Admin\Episode\Uploader;
 use App\Http\Handler\Admin\AdminHandler;
+use App\Helper\Uploader;
 
 class Put extends AdminHandler
 {
@@ -67,7 +67,7 @@ class Put extends AdminHandler
             return '';
         }
 
-        return '/uploads/episode/' . $episode->getId() . '/' . $uploads[0];
+        return '/pub/uploads/episode/' . $episode->getId() . '/' . $uploads[0];
     }
 
     

@@ -13,11 +13,17 @@ return [
         ],
         //'default_handler' => 'Index', // Default handler if none is specified
     ],
+    'alias' => [
+        'pub' => 'pub',
+        'var' => 'var',
+        'logs' => 'log',
+        'uploads' => 'uploads',
+    ],
     'path' => [
-        'pub' => '@{root}/pub',
-        'var' => '@{root}/var',
-        'logs' => '@{path.var}/logs',
-        'uploads' => '@{path.pub}/uploads',
+        'pub' => '@{root}/@{alias.pub}',
+        'var' => '@{root}/@{alias.var}',
+        'logs' => '@{path.var}/@{alias.logs}',
+        'uploads' => '@{path.pub}/@{alias.uploads}',
     ],
     
 ];

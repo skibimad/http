@@ -2,8 +2,9 @@
 
 namespace App\Http\Handler\Admin\Hero;
 
-use App\Http\Handler\Admin\AdminHandler;
+use App\Helper\Uploader;
 use Juzdy\Config;
+use App\Http\Handler\Admin\AdminHandler;
 use App\Model\Hero;
 use Juzdy\Http\RequestInterface;
 use Juzdy\Http\ResponseInterface;
@@ -70,6 +71,6 @@ class Put extends AdminHandler
             return '';
         }
 
-        return '/uploads/hero/' . $hero->getId() . '/' . $uploads[0];
+        return '/pub/uploads/hero/' . $hero->getId() . '/' . $uploads[0];
     }
 }
