@@ -1,5 +1,6 @@
 # Vendor dependencies
 /vendor/
+/pub/uploads/
 
 # Test files
 test-*.html
