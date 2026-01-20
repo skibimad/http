@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Helper;
+namespace App\Admin\Helper;
 
 use App\Model\AdminUser;
+use Juzdy\Http\RequestInterface;
 
-class Auth extends Helper
+class Auth
 {
     /**
      * Check if admin user is logged in
      *
      * @return bool
      */
-    public static function isLoggedIn(): bool
+    public static function isLoggedIn(RequestInterface $request): bool
     {
-        $request = static::getRequest();
         return $request->session('admin_user_id') !== null;
     }
 
@@ -22,9 +22,8 @@ class Auth extends Helper
      *
      * @return int|null
      */
-    public static function getAdminUserId(): ?int
+    public static function getAdminUserId(RequestInterface $request): ?int
     {
-        $request = static::getRequest();
         $userId = $request->session('admin_user_id');
         return $userId !== null ? (int)$userId : null;
     }
@@ -36,9 +35,8 @@ class Auth extends Helper
      * @return void
      * @throws \Exception If credentials are invalid or empty
      */
-    public function login(array $userData): void
+    public function login(array $userData, RequestInterface $request): void
     {
-        $request = static::getRequest();
         
         $email = $userData['email'] ?? '';
         $password = $userData['password'] ?? '';
@@ -68,15 +66,9 @@ class Auth extends Helper
      *
      * @return void
      */
-    public static function logout(): void
+    public static function logout(RequestInterface $request): void
     {
-        $request = static::getRequest();
-        
         // Clear session variables
-        $request->session('admin_user_id', null);
-        $request->session('admin_user_email', null);
-        
-        // Clear the request session state
         $request->clearSession();
         
         // Destroy the PHP session completely

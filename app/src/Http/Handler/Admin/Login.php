@@ -2,12 +2,12 @@
 
 namespace App\Http\Handler\Admin;
 
-use App\Helper\Auth as HelperAuth;
-use Juzdy\Helper\Auth;
+use Juzdy\Http\Handler;
 use Juzdy\Http\RequestInterface;
 use Juzdy\Http\ResponseInterface;
+use App\Admin\Helper\Auth;
 
-class Login extends AdminHandler
+class Login extends Handler
 {
     /**
      * Handle login request
@@ -17,7 +17,7 @@ class Login extends AdminHandler
     public function handle(RequestInterface $request): ResponseInterface
     {
         // If user is already logged in, redirect to dashboard
-        if (HelperAuth::isLoggedIn()) {
+        if (Auth::isLoggedIn($request)) {
             return $this->redirect('/admin/index');
             
         }
@@ -28,10 +28,10 @@ class Login extends AdminHandler
         }
 
         // Show login form
-        $this->layout(
-            'skibidi/admin',
-            'standalone/login',
-            []
+        return $this->layout(
+            'skibidi/admin/standalone',
+            'login',
+            [],
         );
     }
 
@@ -49,7 +49,7 @@ class Login extends AdminHandler
 
         try {
             $auth = $this->getAuth();
-            $auth->login($userData);
+            $auth->login($userData, $request);
             
             // Login successful - get intended URL or default to admin dashboard
             //$intendedUrl = $this->request()->session('intended_url', '/admin/index');

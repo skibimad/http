@@ -2,7 +2,7 @@
 
 namespace App\Http\Handler\Admin;
 
-use Juzdy\Helper\Auth;
+use App\Admin\Helper\Auth;
 use Juzdy\Http\RequestInterface;
 use Juzdy\Http\ResponseInterface;
 
@@ -15,9 +15,7 @@ class Logout extends AdminHandler
      */
     public function handle(RequestInterface $request): ResponseInterface
     {
-        Auth::logout();
-        
-        $this->getRequest()->addInfo('You have been successfully logged out.');
-        $this->redirect('/?q=admin/login');
+        Auth::logout($request);
+        return $this->redirect('/admin/login');
     }
 }

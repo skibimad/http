@@ -28,6 +28,9 @@ return [
              *  \Bar\Foo\RequestLoggingMiddleware::class,
              * ],
              */
+            \App\Http\Handler\Admin\AuthenticableInterface::class => [
+                \App\Admin\Middleware\AuthMiddleware::class,
+            ],
         ],
     ],
 ];
