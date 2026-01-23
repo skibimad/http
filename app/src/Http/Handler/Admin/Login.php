@@ -29,7 +29,7 @@ class Login extends Handler
 
         // Show login form
         return $this->layout(
-            'skibidi/admin/standalone',
+            'skibidi/admin/login/',
             'login',
             [],
         );

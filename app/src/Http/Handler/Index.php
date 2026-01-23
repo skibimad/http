@@ -35,7 +35,7 @@ class Index extends Handler
     {
         return $this->layout(
             'skibidi',
-            'index',
+            'landing',
             [
                 'getLandingContent' => $this->getLandingContent(),
                 'episodes' => $this->getEpisodes(),
