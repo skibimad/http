@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skibidi Madness - Glitch Text</title>
+    <style>
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes glitchIntense {
+            0%, 100% {
+                text-shadow: 
+                    0 0 15px rgba(255, 51, 102, 1),
+                    0 0 30px rgba(255, 51, 102, 0.8),
+                    0 0 45px rgba(255, 51, 102, 0.6),
+                    3px 3px 0 #00f5d4,
+                    -2px -2px 0 #a259ff;
+            }
+            25% {
+                text-shadow: 
+                    0 0 15px rgba(255, 51, 102, 1),
+                    0 0 30px rgba(255, 51, 102, 0.8),
+                    0 0 45px rgba(255, 51, 102, 0.6),
+                    -3px -3px 0 #a259ff,
+                    2px 2px 0 #00f5d4;
+            }
+            50% {
+                text-shadow: 
+                    0 0 15px rgba(255, 51, 102, 1),
+                    0 0 30px rgba(255, 51, 102, 0.8),
+                    0 0 45px rgba(255, 51, 102, 0.6),
+                    3px -3px 0 #ffd93d,
+                    -2px 2px 0 #00f5d4;
+            }
+            75% {
+                text-shadow: 
+                    0 0 15px rgba(255, 51, 102, 1),
+                    0 0 30px rgba(255, 51, 102, 0.8),
+                    0 0 45px rgba(255, 51, 102, 0.6),
+                    -3px 3px 0 #00f5d4,
+                    2px -2px 0 #a259ff;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="glitch-text" data-text="SKIBIDI MADNESS" style="
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(3rem, 8vw, 6rem);
+        font-weight: 900;
+        color: #ff2d78;
+        background: linear-gradient(135deg, 
+            #ff2d78 0%, 
+            #00f5d4 40%, 
+            #a259ff 70%,
+            #ffd93d 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-size: 300% 300%;
+        animation: gradientShift 5s ease infinite, glitchIntense 3s infinite;
+        letter-spacing: 0.1em;
+        margin-bottom: 1rem;
+        position: relative;
+        filter: drop-shadow(0 0 30px rgba(255, 45, 120, 0.7)) 
+                drop-shadow(0 0 60px rgba(0, 245, 212, 0.4));
+    ">
+        <span>SKIBIDI MADNESS</span>
+    </div>
+</body>
+</html>

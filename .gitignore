@@ -23,4 +23,5 @@ Thumbs.db
 *.log
 
 # Temporary files
-/tmp/
+/tmp/*
+!/tmp/hero.html
