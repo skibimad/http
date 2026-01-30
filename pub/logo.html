@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skibidi Madness - Animated Logo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #0d0d12;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        @keyframes glitchLight {
+            0%, 100% {
+                text-shadow: 
+                    0 0 10px rgba(255, 51, 102, 0.8),
+                    2px 2px 0 rgba(0, 245, 212, 0.6),
+                    -1px -1px 0 rgba(162, 89, 255, 0.6);
+            }
+            50% {
+                text-shadow: 
+                    0 0 10px rgba(255, 51, 102, 0.8),
+                    -2px -2px 0 rgba(0, 245, 212, 0.6),
+                    1px 1px 0 rgba(162, 89, 255, 0.6);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 style="
+        font-family: 'Orbitron', sans-serif;
+        font-size: 3rem;
+        font-weight: 900;
+        color: #ff2d78;
+        animation: glitchLight 3s infinite;
+        letter-spacing: 0.1em;
+        margin: 0;
+        position: relative;
+        width: 320px;
+        text-align: center;
+        line-height: 1.2;
+    ">
+        <span>SKIBIDI MADNESS</span>
+    </h1>
+</body>
+</html>
