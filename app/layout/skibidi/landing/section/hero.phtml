@@ -22,7 +22,7 @@ use App\Helper\Resource;
         </p>
         <div class="hero-buttons">
             <a href="#videos" class="btn btn-primary g-tag" data-gtag="cta_click" data-gtag-section="hero">Watch Now</a>
-            <a href="/youclick?y=<?php echo \App\Helper\YouChannel::getSubscribeButtonUrl(); ?>" target="_blank" class="btn btn-secondary g-tag" data-gtag="cta_click" data-gtag-section="hero">Subscribe</a>
+            <a href="<?php echo \App\Helper\YouChannel::getSubscribeButtonUrl(); ?>" target="_blank" class="btn btn-secondary g-tag" data-gtag="cta_click" data-gtag-section="hero">Subscribe</a>
         </div>
     </div>
     <div class="scroll-indicator">
