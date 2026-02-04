@@ -16,7 +16,7 @@ $heroes = $this('heroes');
                     <div class="hero-card-inner">
                         <div class="hero-image-wrapper">
                             <img loading="lazy" src="/<?= htmlspecialchars(trim($hero['image'], '/')) ?>" alt="<?= htmlspecialchars($hero['name']) ?>" class="hero-image">
-                            <video class="hero-video-preview" muted loop preload="none">
+                            <video class="hero-video-preview" muted loop preload="lazy">
                                 <source src="/<?= htmlspecialchars(trim($hero['video'], '/')) ?>" type="video/mp4">
                             </video>
                         </div>
