@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollAnimations();
     initVideoAutoplay();
     initSmoothScroll();
-    initAnnouncementBanner();
 });
 
 // Theme Switcher
@@ -281,25 +280,6 @@ function initSmoothScroll() {
     });
 }
 
-// Auto-hide announcement banner after 5 seconds
-function initAnnouncementBanner() {
-    const banner = document.querySelector('.version-announcement');
-    if (banner) {
-        const HIDE_DELAY_MS = 5000;
-        const ANIMATION_DURATION_MS = 800;
-        
-        setTimeout(function() {
-            banner.style.transition = `opacity ${ANIMATION_DURATION_MS}ms ease, transform ${ANIMATION_DURATION_MS}ms ease`;
-            banner.style.opacity = '0';
-            banner.style.transform = 'translateY(-20px)';
-            
-            // Remove from DOM after animation completes
-            setTimeout(function() {
-                banner.remove();
-            }, ANIMATION_DURATION_MS);
-        }, HIDE_DELAY_MS);
-    }
-}
 
 // Parallax effect for hero section (throttled for performance)
 const heroVideo = document.querySelector('.hero-video');
