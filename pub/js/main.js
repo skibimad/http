@@ -176,6 +176,16 @@ function initHeroCards() {
 
 // Scroll Animations
 function initScrollAnimations() {
+    if (!('IntersectionObserver' in window)) {
+        const revealElements = document.querySelectorAll('section, .hero-card, .video-card, .blog-card');
+        revealElements.forEach(element => {
+            element.classList.add('reveal', 'active');
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+        });
+        return;
+    }
+
     // Observer for fade-in animations with enhanced effects
     const observerOptions = {
         threshold: 0.15,
@@ -211,6 +221,15 @@ function initScrollAnimations() {
         card.style.transition = `opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.1}s, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.1}s`;
         observer.observe(card);
     });
+
+    // Fallback for browsers/devices where observer callbacks are delayed or skipped
+    setTimeout(function() {
+        document.querySelectorAll('.reveal:not(.active)').forEach(element => {
+            element.classList.add('active');
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+        });
+    }, 1500);
     
     // Enhanced navbar scroll effect
     const navbar = document.querySelector('.navbar');
