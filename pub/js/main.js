@@ -176,63 +176,11 @@ function initHeroCards() {
 
 // Scroll Animations
 function initScrollAnimations() {
-    if (!('IntersectionObserver' in window)) {
-        const revealElements = document.querySelectorAll('section, .hero-card, .video-card, .blog-card');
-        revealElements.forEach(element => {
-            element.classList.add('reveal', 'active');
-            element.style.opacity = '1';
-            element.style.transform = 'translateY(0)';
-        });
-        return;
-    }
-
-    // Observer for fade-in animations with enhanced effects
-    const observerOptions = {
-        threshold: 0.15,
-        rootMargin: '0px 0px -80px 0px'
-    };
-    
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-    
-    // Observe sections with reveal class
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        section.classList.add('reveal');
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(40px)';
-        section.style.transition = 'opacity 1s cubic-bezier(0.34, 1.56, 0.64, 1), transform 1s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        observer.observe(section);
-    });
-    
-    // Observe cards with staggered animation
-    const cards = document.querySelectorAll('.hero-card, .video-card, .blog-card');
-    cards.forEach((card, index) => {
-        card.classList.add('reveal');
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(40px) scale(0.95)';
-        card.style.transition = `opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.1}s, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.1}s`;
-        observer.observe(card);
-    });
-
-    // Fallback for browsers/devices where observer callbacks are delayed or skipped
-    setTimeout(function() {
-        document.querySelectorAll('.reveal:not(.active)').forEach(element => {
-            element.classList.add('active');
-            element.style.opacity = '1';
-            element.style.transform = 'translateY(0)';
-        });
-    }, 1500);
-    
     // Enhanced navbar scroll effect
     const navbar = document.querySelector('.navbar');
+    if (!navbar) {
+        return;
+    }
     
     window.addEventListener('scroll', throttle(function() {
         const currentScroll = window.pageYOffset;
