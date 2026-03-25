@@ -4,7 +4,7 @@
 <meta name="keywords" content="Skibidi Toilet, Skibidi Madness, FireStormX Studios, Titan Cameraman, Titan Speakerman, Titan TV Man, G-Man, animation series">
 <meta property="og:title" content="Skibidi Madness - Epic Multiverse Animation Series">
 <meta property="og:description" content="New story and adventures featuring chaos, battles across multiple universes">
-<meta property="og:image" content="/res/img/all-together.png">
+<meta property="og:image" content="/pub/uploads/landing/about_image_696e20e11c6602.78398652.jpg">
 
 <title><?= $title ?? 'Skibidi Madness | FireStormX Studios' ?></title>
 
@@ -23,13 +23,13 @@
  
 <script>
     (function() {
+        document.documentElement.classList.add('js');
         const stored = localStorage.getItem('theme');
-        // Default to dark theme if no preference stored
+        // Default to dark theme unless user explicitly selected light
         let theme = 'dark';
         if (stored === 'light') {
             theme = 'light';
         }
-        // Note: system theme option has been removed, defaults to dark
         document.documentElement.setAttribute('data-theme', theme);
     })();
 </script>
