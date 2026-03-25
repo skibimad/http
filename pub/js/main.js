@@ -126,23 +126,6 @@ function initNavigation() {
         });
     });
     
-    // Navbar background on scroll (throttled for performance)
-    const navbar = document.querySelector('.navbar');
-    let lastScroll = 0;
-    
-    const handleNavbarScroll = throttle(function() {
-        const currentScroll = window.pageYOffset;
-        
-        if (currentScroll > 100) {
-            navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.8)';
-        } else {
-            navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.5)';
-        }
-        
-        lastScroll = currentScroll;
-    }, 16); // ~60fps throttle
-    
-    window.addEventListener('scroll', handleNavbarScroll, { passive: true });
 }
 
 /* Hero Cards - Video Preview on Hover */
@@ -181,18 +164,14 @@ function initScrollAnimations() {
     if (!navbar) {
         return;
     }
-    
-    window.addEventListener('scroll', throttle(function() {
+
+    const syncNavbarScrollState = function() {
         const currentScroll = window.pageYOffset;
-        
-        if (currentScroll > 100) {
-            navbar.style.background = 'rgba(13, 13, 18, 0.90)';
-            navbar.style.boxShadow = '0 8px 40px rgba(0, 0, 0, 0.8), 0 0 100px rgba(255, 45, 120, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
-        } else {
-            navbar.style.background = 'rgba(13, 13, 18, 0.75)';
-            navbar.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.6), 0 0 80px rgba(255, 45, 120, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05)';
-        }
-    }, 100));
+        navbar.classList.toggle('scrolled', currentScroll > 100);
+    };
+
+    syncNavbarScrollState();
+    window.addEventListener('scroll', throttle(syncNavbarScrollState, 100), { passive: true });
 }
 
 // Video Autoplay for Channel Section
