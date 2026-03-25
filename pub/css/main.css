@@ -108,6 +108,11 @@ body {
     font-size: 18px;
 }
 
+a{
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
 /* Container */
 .container {
     max-width: 1400px;
